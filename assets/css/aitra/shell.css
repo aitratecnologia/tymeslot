@@ -1,0 +1,452 @@
+/* ==========================================================================
+   Aitra: dashboard shell
+
+   Markup: TymeslotWeb.Components.DashboardLayout (#dashboard-root, the top
+   bar, #dashboard-content-container) and DashboardSidebar (#dashboard-sidebar).
+
+   Layout of the frame:
+     - a flush white top bar with a hairline, carrying the full-colour logo;
+     - the page on a light grey canvas, so white cards read as cards;
+     - the navigation as a calm ink (#101820) panel: on desktop an inset
+       island with rounded corners, below lg the existing off-canvas drawer.
+
+   Why a dark sidebar: it is the brand manual's signature background, it
+   separates "where can I go" from "what am I doing" without a single extra
+   line, and it lets the selected row be a solid blue fill that is visible at a
+   glance. The content stays light for reading and forms.
+
+   These rules are unlayered and ID-scoped on purpose: they replace utility
+   classes written in the upstream templates (padding, borders, gradients),
+   which a components-layer rule could not override.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Canvas
+   --------------------------------------------------------------------------- */
+#dashboard-root {
+  background-color: var(--aitra-canvas);
+  color: var(--color-tymeslot-900);
+}
+
+/* Breathing room above the page header (pages without full width). */
+#dashboard-content-container > .max-w-7xl {
+  padding-top: 1.75rem;
+}
+
+@media (width >= 64rem) {
+  #dashboard-content-container > .max-w-7xl {
+    padding-top: 2.25rem;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Top bar: flush, white, one hairline. No floating rounded card.
+   --------------------------------------------------------------------------- */
+#dashboard-root > .shrink-0 > div:has(> .brand-nav) {
+  padding: 0;
+}
+
+#dashboard-root .brand-nav {
+  border: 0;
+  border-bottom: 1px solid var(--aitra-hairline);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--aitra-surface);
+  padding: 0 0.75rem;
+}
+
+@media (width >= 40rem) {
+  #dashboard-root .brand-nav {
+    padding-inline: 1.25rem;
+  }
+}
+
+#dashboard-root .brand-nav .h-16 {
+  height: 3.75rem;
+}
+
+#dashboard-root .brand-nav img {
+  height: 2.25rem;
+}
+
+@media (width >= 40rem) {
+  #dashboard-root .brand-nav img {
+    height: 2.5rem;
+  }
+}
+
+/* Hamburger: a quiet square, not a tinted box. */
+#dashboard-sidebar-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--aitra-hairline);
+  background: var(--aitra-surface);
+  border-radius: 0.625rem;
+  transition: background-color var(--aitra-fast) ease;
+}
+
+@media (hover: hover) {
+  #dashboard-sidebar-toggle:hover {
+    background: var(--color-tymeslot-50);
+    border-color: var(--aitra-hairline-strong);
+  }
+}
+
+/* User menu (UserDropdownComponent, id "user-menu"): a flat chip with a
+   round avatar, and a panel that matches the dialogs. */
+#user-menu > button {
+  border-width: 1px;
+  border-color: var(--aitra-hairline);
+  border-radius: 999px;
+  box-shadow: none;
+  padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+  transition: background-color var(--aitra-fast) ease, border-color var(--aitra-fast) ease;
+}
+
+@media (hover: hover) {
+  #user-menu > button:hover {
+    background: var(--color-tymeslot-50);
+    border-color: var(--aitra-hairline-strong);
+    box-shadow: none;
+  }
+}
+
+#user-menu > button > div:first-child {
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+#user-menu > button > span {
+  font-weight: 560;
+}
+
+#user-menu-panel {
+  border: 1px solid var(--aitra-hairline);
+  border-radius: 0.75rem;
+  box-shadow: var(--aitra-elev-3);
+  --tw-ring-shadow: 0 0 #0000;
+}
+
+/* Theme switch (system / light / dark), injected before the user menu by
+   assets/js/aitra/theme.js. */
+.aitra-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--aitra-hairline);
+  background: transparent;
+  color: var(--color-tymeslot-600);
+  cursor: pointer;
+  transition:
+    background-color var(--aitra-fast) ease,
+    color var(--aitra-fast) ease,
+    transform var(--aitra-fast) var(--aitra-ease-out);
+}
+
+.aitra-theme-toggle svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+@media (hover: hover) {
+  .aitra-theme-toggle:hover {
+    background: var(--color-tymeslot-50);
+    color: var(--aitra-text);
+  }
+}
+
+.aitra-theme-toggle:active {
+  transform: scale(0.94);
+}
+
+/* ---------------------------------------------------------------------------
+   Sidebar
+   --------------------------------------------------------------------------- */
+#dashboard-sidebar {
+  background: var(--aitra-sidebar);
+  border: 0;
+  color: rgb(255 255 255 / 0.72);
+  scrollbar-color: rgb(255 255 255 / 0.18) transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Desktop: an inset island beside the content, not a full-height slab. */
+@media (width >= 64rem) {
+  #dashboard-sidebar {
+    margin: 0.75rem 0 0.75rem 0.75rem;
+    height: calc(100% - 1.5rem);
+    border-radius: 1rem;
+    box-shadow: var(--aitra-elev-2);
+    width: 15.5rem;
+  }
+}
+
+/* Below lg it is the off-canvas drawer: square edges against the screen. */
+@media (width < 64rem) {
+  #dashboard-sidebar {
+    border-radius: 0 1rem 1rem 0;
+    box-shadow: var(--aitra-elev-4);
+  }
+
+  #dashboard-sidebar-overlay {
+    background-color: rgb(16 24 32 / 0.48);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* The drawer's own logo (mobile only); dark.css swaps in the white-text
+   version, since the panel is dark in both themes. */
+#dashboard-sidebar img {
+  height: 2rem;
+}
+
+#dashboard-sidebar .dashboard-sidebar-close {
+  background: rgb(255 255 255 / 0.06);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  color: #fff;
+  padding: 0.625rem;
+  border-radius: 0.625rem;
+}
+
+#dashboard-sidebar .dashboard-sidebar-close svg {
+  color: rgb(255 255 255 / 0.85);
+}
+
+@media (hover: hover) {
+  #dashboard-sidebar .dashboard-sidebar-close:hover {
+    background: rgb(255 255 255 / 0.12);
+  }
+}
+
+/* Section labels: small, quiet, sentence-cased as written. No rule after. */
+#dashboard-sidebar .dashboard-nav-section-title {
+  padding: 0 0.75rem;
+  margin: 0 0 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 560;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: rgb(255 255 255 / 0.45);
+}
+
+#dashboard-sidebar .dashboard-nav-section-title::after {
+  display: none;
+}
+
+#dashboard-sidebar nav {
+  margin-top: 1.25rem;
+}
+
+#dashboard-sidebar nav > div + div {
+  margin-top: 1.25rem;
+}
+
+/* Rows */
+#dashboard-sidebar .dashboard-nav-link {
+  color: rgb(255 255 255 / 0.72);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+  border-radius: 0.5rem;
+  padding: 0.4375rem 0.75rem;
+  background: transparent;
+  box-shadow: none;
+  translate: none;
+  transition:
+    background-color var(--aitra-fast) ease,
+    color var(--aitra-fast) ease;
+}
+
+#dashboard-sidebar .dashboard-nav-link svg {
+  width: 1.125rem;
+  height: 1.125rem;
+  opacity: 0.8;
+  scale: none;
+  color: currentColor;
+}
+
+@media (hover: hover) {
+  #dashboard-sidebar .dashboard-nav-link:hover {
+    color: #fff;
+    background: rgb(255 255 255 / 0.06);
+    translate: none;
+  }
+}
+
+#dashboard-sidebar .dashboard-nav-link:hover svg {
+  scale: none;
+}
+
+/* Selected row: the one solid fill in the panel. */
+#dashboard-sidebar .dashboard-nav-link--active,
+#dashboard-sidebar .dashboard-nav-link--active:hover {
+  color: #fff;
+  background: var(--aitra-accent);
+  background-image: none;
+  font-weight: 560;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+#dashboard-sidebar .dashboard-nav-link--active svg {
+  opacity: 1;
+  color: #fff;
+}
+
+#dashboard-sidebar .dashboard-nav-link--active::before {
+  display: none;
+}
+
+#dashboard-sidebar .dashboard-nav-link:focus-visible {
+  outline: 2px solid #93b7e2;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+/* Setup reminder dot: brighter blue on ink. */
+#dashboard-sidebar .dashboard-nav-notification .bg-turquoise-600 {
+  background-color: #93b7e2;
+}
+
+@media (width < 64rem) {
+  #dashboard-sidebar .dashboard-nav-link {
+    min-height: 44px;
+    padding: 0.625rem 0.875rem;
+    font-size: 1rem;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* "View page": the panel's one button, white on ink. The copy button beside
+   it is a quiet square. Both stay out of the active-row blue so the selected
+   section is never ambiguous. */
+#dashboard-sidebar a.dashboard-nav-link[target="_blank"] {
+  justify-content: center;
+  background: #fff;
+  background-image: none;
+  color: var(--aitra-ink);
+  font-weight: 600;
+  box-shadow: none;
+  padding-block: 0.5625rem;
+}
+
+#dashboard-sidebar a.dashboard-nav-link[target="_blank"] svg,
+#dashboard-sidebar a.dashboard-nav-link[target="_blank"] span {
+  color: var(--aitra-ink);
+}
+
+@media (hover: hover) {
+  #dashboard-sidebar a.dashboard-nav-link[target="_blank"]:hover {
+    background: #e1e6eb;
+    color: var(--aitra-ink);
+  }
+}
+
+#dashboard-sidebar #copy-scheduling-link {
+  border: 1px solid rgb(255 255 255 / 0.14);
+  background: transparent;
+  color: rgb(255 255 255 / 0.85);
+  padding: 0.5625rem 0.75rem;
+  box-shadow: none;
+}
+
+@media (hover: hover) {
+  #dashboard-sidebar #copy-scheduling-link:hover {
+    background: rgb(255 255 255 / 0.08);
+    border-color: rgb(255 255 255 / 0.24);
+  }
+}
+
+/* Disabled "View page" and copy (no meeting type / integration yet). */
+#dashboard-sidebar #copy-scheduling-link-disabled,
+#dashboard-sidebar div.cursor-not-allowed {
+  background: rgb(255 255 255 / 0.04);
+  border: 1px solid rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.4);
+  opacity: 1;
+  padding-block: 0.5625rem;
+  border-radius: 0.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+   Page header (section_header level 1 inside dashboard_page)
+   A large, calm title on a hairline; the icon in a small tinted tile.
+   --------------------------------------------------------------------------- */
+#dashboard-root div:has(> div > h1.dashboard-title) {
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--aitra-hairline);
+}
+
+#dashboard-root .dashboard-title {
+  font-size: 1.625rem;
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--aitra-text);
+}
+
+@media (width >= 40rem) {
+  #dashboard-root .dashboard-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media (width >= 64rem) {
+  #dashboard-root .dashboard-title {
+    font-size: 2rem;
+  }
+}
+
+/* The icon tile before the title. */
+#dashboard-root div:has(+ h1.dashboard-title) {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0;
+  border-radius: 0.625rem;
+  background: var(--color-turquoise-50);
+  box-shadow: none;
+}
+
+#dashboard-root div:has(+ h1.dashboard-title) svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--aitra-accent-text);
+}
+
+/* ---------------------------------------------------------------------------
+   Signature panels: the overview welcome banner and the "up next" card
+   (both carry .dashboard-sheen). Ink instead of a three-colour gradient.
+   --------------------------------------------------------------------------- */
+#dashboard-root :has(> .dashboard-sheen) {
+  background-color: var(--aitra-panel);
+  background-image:
+    radial-gradient(120% 140% at 100% 0%, rgb(64 126 201 / 0.32), transparent 55%);
+  box-shadow: var(--aitra-elev-2);
+  border-radius: 1rem;
+}
+
+#dashboard-root .dashboard-sheen {
+  display: none;
+}
+
+/* The welcome line: a quieter weight on the dark panel. */
+#dashboard-root :has(> .dashboard-sheen) .font-black {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+/* The calendar's "up next" strip (same gradient utilities, no sheen). */
+#dashboard-root .bg-linear-to-r.from-turquoise-600.to-cyan-600.mt-2 {
+  background-image: none;
+  background-color: var(--aitra-panel);
+  box-shadow: none;
+}

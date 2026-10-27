@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Aitra: design tokens
+
+   Every colour the app paints comes from a Tailwind theme variable
+   (`bg-turquoise-600` compiles to `background-color: var(--color-turquoise-600)`)
+   or from a design token in base/variables.css. Both are declared on :root,
+   the Tailwind ones inside `@layer theme`. Redefining them here, unlayered and
+   later in the cascade, re-skins every utility and component that uses them
+   without touching a template. (An `@theme` block would not work from here:
+   app.css's own `@theme` comes after this import and would win.)
+
+   Palette (Aitra brand manual):
+     ink    #101820  base dark, text on white, the sidebar
+     blue   #407EC9  networks; the accent (replaces Tymeslot's turquoise)
+     green  #71CC98  dev; success
+     red    #CB333B  security; danger and destructive actions
+
+   Contrast (WCAG 2.x, measured):
+     white on brand-600 #2F6BB3 (primary button)   5.42:1
+     white on brand-700 #28599A (primary hover)     7.03:1
+     brand-600 text on white (links)                5.42:1
+     brand-700 on brand-100 (brand pill)            5.78:1
+     white on red-600 #CB333B (danger button)       5.15:1
+     red-600 text on white (destructive outline)    5.15:1
+     white on green-600 #2A8252 (success button)    4.76:1
+     neutral-500 #647181 on white / on canvas       4.98:1 / 4.63:1
+     neutral-600 #4B5866 on white                   7.27:1
+     ink on white                                  17.89:1
+     sidebar link text on ink                       8.88:1, labels 5.68:1
+     brand-500 #407EC9 focus ring on white          4.16:1 (non-text, ≥3:1)
+   #407EC9 itself is kept for icons, rings and fills without text: white text
+   on it is only 4.16:1, so filled buttons use brand-600.
+   ========================================================================== */
+
+:root {
+  /* ---- Aitra named tokens (used by the other aitra/*.css files) ---- */
+  --aitra-ink: #101820;
+  --aitra-ink-2: #18222c;           /* raised surface on ink (hover)      */
+  --aitra-canvas: #f5f7f9;          /* the dashboard's page background    */
+  --aitra-surface: #ffffff;         /* cards, top bar, dialogs            */
+  --aitra-surface-2: #ffffff;       /* dialogs and menus (raised)         */
+  --aitra-field: #ffffff;           /* inputs                             */
+  --aitra-hairline: #e1e6eb;        /* 1px borders between surfaces       */
+  --aitra-hairline-strong: #c4ccd5; /* input borders, dividers that matter */
+  --aitra-blue: #407ec9;
+  --aitra-green: #71cc98;
+  --aitra-red: #cb333b;
+
+  /* Semantic roles. Components use these, not the brand constants above, so
+     dark.css can flip a role without touching the components. */
+  --aitra-text: #101820;            /* primary text                        */
+  --aitra-sidebar: #101820;         /* the navigation panel                */
+  --aitra-panel: #101820;           /* signature panels (welcome, up next) */
+  --aitra-accent: #2f6bb3;          /* filled primary: white text 5.42:1   */
+  --aitra-accent-hover: #28599a;
+  --aitra-accent-text: #2f6bb3;     /* accent as text/icon on a surface    */
+  --aitra-danger: #cb333b;          /* filled destructive                  */
+  --aitra-danger-hover: #a8282f;
+  --aitra-danger-text: #cb333b;     /* destructive text and outline        */
+  --aitra-danger-edge: #eea3a7;
+  --aitra-success: #2a8252;
+  --aitra-success-hover: #236a44;
+
+  --aitra-elev-1: 0 1px 2px rgb(16 24 32 / 0.05);
+  --aitra-elev-2: 0 1px 2px rgb(16 24 32 / 0.04), 0 2px 8px -2px rgb(16 24 32 / 0.06);
+  --aitra-elev-3: 0 2px 4px rgb(16 24 32 / 0.04), 0 12px 24px -8px rgb(16 24 32 / 0.12);
+  --aitra-elev-4: 0 4px 8px rgb(16 24 32 / 0.04), 0 24px 48px -12px rgb(16 24 32 / 0.22);
+  --aitra-ring: 0 0 0 3px color-mix(in oklab, var(--aitra-blue) 28%, transparent);
+  --aitra-ring-danger: 0 0 0 3px color-mix(in oklab, var(--aitra-red) 24%, transparent);
+
+  /* Emil Kowalski's curves: strong ease-out for UI, drawer curve for sheets. */
+  --aitra-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --aitra-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --aitra-fast: 120ms;
+  --aitra-base: 180ms;
+
+  /* ---- Accent: Tymeslot's turquoise and cyan become Aitra blue ----
+     Cyan takes the same values, so every `from-turquoise-* to-cyan-*`
+     gradient renders as one flat colour. */
+  --color-turquoise-50: #eef4fb;
+  --color-turquoise-100: #dfeaf7;
+  --color-turquoise-200: #c0d5ef;
+  --color-turquoise-300: #93b7e2;
+  --color-turquoise-400: #6497d4;
+  --color-turquoise-500: #407ec9;
+  --color-turquoise-600: #2f6bb3;
+  --color-turquoise-700: #28599a;
+  --color-turquoise-800: #244a7c;
+  --color-turquoise-900: #213f66;
+  --color-turquoise-950: #152841;
+
+  --color-cyan-50: #eef4fb;
+  --color-cyan-100: #dfeaf7;
+  --color-cyan-200: #c0d5ef;
+  --color-cyan-300: #93b7e2;
+  --color-cyan-400: #6497d4;
+  --color-cyan-500: #407ec9;
+  --color-cyan-600: #2f6bb3;
+  --color-cyan-700: #28599a;
+  --color-cyan-800: #244a7c;
+  --color-cyan-900: #213f66;
+  --color-cyan-950: #152841;
+
+  /* Tailwind's blue is the "info" tone and the end of the overview gradient;
+     one blue in the product, not two. */
+  --color-blue-50: #eef4fb;
+  --color-blue-100: #dfeaf7;
+  --color-blue-200: #c0d5ef;
+  --color-blue-300: #93b7e2;
+  --color-blue-400: #6497d4;
+  --color-blue-500: #407ec9;
+  --color-blue-600: #2f6bb3;
+  --color-blue-700: #28599a;
+  --color-blue-800: #244a7c;
+  --color-blue-900: #213f66;
+  --color-blue-950: #152841;
+
+  --color-primary-50: #eef4fb;
+  --color-primary-100: #dfeaf7;
+  --color-primary-200: #c0d5ef;
+  --color-primary-300: #93b7e2;
+  --color-primary-400: #6497d4;
+  --color-primary-500: #407ec9;
+  --color-primary-600: #2f6bb3;
+  --color-primary-700: #28599a;
+  --color-primary-800: #244a7c;
+  --color-primary-900: #213f66;
+  --color-primary-950: #152841;
+
+  /* ---- Neutrals: Tymeslot's zinc becomes a cool grey anchored on ink ---- */
+  --color-tymeslot-50: #f6f8fa;
+  --color-tymeslot-100: #eef1f4;
+  --color-tymeslot-200: #e1e6eb;
+  --color-tymeslot-300: #c4ccd5;
+  --color-tymeslot-400: #8a95a2;
+  --color-tymeslot-500: #647181;
+  --color-tymeslot-600: #4b5866;
+  --color-tymeslot-700: #36414d;
+  --color-tymeslot-800: #232d38;
+  --color-tymeslot-900: #101820;
+  --color-tymeslot-950: #0a1016;
+
+  --color-neutral-50: #f6f8fa;
+  --color-neutral-100: #eef1f4;
+  --color-neutral-200: #e1e6eb;
+  --color-neutral-300: #c4ccd5;
+  --color-neutral-400: #8a95a2;
+  --color-neutral-500: #647181;
+  --color-neutral-600: #4b5866;
+  --color-neutral-700: #36414d;
+  --color-neutral-800: #232d38;
+  --color-neutral-900: #101820;
+  --color-neutral-950: #0a1016;
+
+  /* Slate appears in the modal and top-bar chrome; gray-200 is the default
+     border colour (app.css restores it in @layer base). */
+  --color-slate-50: #f6f8fa;
+  --color-slate-100: #eef1f4;
+  --color-slate-200: #e1e6eb;
+  --color-slate-300: #c4ccd5;
+  --color-slate-400: #8a95a2;
+  --color-slate-500: #647181;
+  --color-slate-600: #4b5866;
+  --color-slate-700: #36414d;
+  --color-slate-800: #232d38;
+  --color-slate-900: #101820;
+  --color-gray-200: #e1e6eb;
+
+  /* ---- Success: Aitra green (#71CC98 is the 400; text and fills that carry
+     white text use the darker steps) ---- */
+  --color-green-50: #effaf3;
+  --color-green-100: #dcf3e5;
+  --color-green-200: #bce8cd;
+  --color-green-300: #96dab3;
+  --color-green-400: #71cc98;
+  --color-green-500: #3a9f66;
+  --color-green-600: #2a8252;
+  --color-green-700: #236a44;
+  --color-green-800: #1f5639;
+  --color-green-900: #1b4730;
+  --color-green-950: #0c2819;
+  --color-emerald-500: #3a9f66;
+  --color-emerald-600: #2a8252;
+
+  /* ---- Danger: Aitra red (#CB333B is the 600) ---- */
+  --color-red-50: #fdf3f3;
+  --color-red-100: #fbe4e5;
+  --color-red-200: #f6cbcd;
+  --color-red-300: #eea3a7;
+  --color-red-400: #e2737a;
+  --color-red-500: #d74850;
+  --color-red-600: #cb333b;
+  --color-red-700: #a8282f;
+  --color-red-800: #8a242a;
+  --color-red-900: #722328;
+  --color-red-950: #3e0e11;
+  --color-rose-500: #d74850;
+  --color-rose-600: #cb333b;
+
+  /* ---- Design tokens from base/variables.css ---- */
+  --color-accent-blue: #407ec9;
+  --color-accent-green: #3a9f66;
+  --color-accent-red: #cb333b;
+  --color-success: #2a8252;
+  --color-error: #cb333b;
+  --color-error-bg: #fdf3f3;
+  --color-info: #2f6bb3;
+
+  --color-text-primary: #101820;
+  --color-text-secondary: #4b5866;
+  --color-text-tertiary: #647181;
+  --color-text-glass-primary: #101820;
+  --color-text-glass-secondary: #4b5866;
+  --color-text-glass-light: #647181;
+
+  --color-border-light: #e1e6eb;
+  --color-border-default: #c4ccd5;
+  --color-border-dark: #8a95a2;
+  --color-border-glass-dark: #c4ccd5;
+  --color-border-glass-dark-medium: #b0b9c3;
+  --color-border-glass-dark-strong: #8a95a2;
+
+  /* Glass becomes solid: the dashboard's cards and panels read as calm,
+     opaque surfaces rather than frosted overlays. */
+  --color-glass-bg-light: #ffffff;
+  --color-glass-bg-medium: #ffffff;
+  --color-glass-bg-strong: #ffffff;
+  --color-glass-bg-card: #ffffff;
+  --color-glass-bg-card-enhanced: #ffffff;
+  --color-glass-bg-overlay: rgb(255 255 255 / 0.08);
+  --color-glass-bg-overlay-enhanced: rgb(255 255 255 / 0.12);
+  --shadow-glass-card-enhanced: var(--aitra-elev-2);
+  --shadow-glass-card: var(--aitra-elev-2);
+  --shadow-glass-sm: 0 1px 3px rgb(16 24 32 / 0.18);
+
+  --glass-gradient-primary: linear-gradient(#2f6bb3, #2f6bb3);
+  --glass-gradient-secondary: linear-gradient(#28599a, #28599a);
+  --glass-gradient-overlay: linear-gradient(#2f6bb3, #2f6bb3);
+  --glass-gradient-fallback: linear-gradient(#2f6bb3, #2f6bb3);
+
+  --dropdown-radius: 0.75rem;
+  --dropdown-shadow: var(--aitra-elev-3);
+  --dropdown-border: var(--aitra-hairline);
+
+  /* ---- Type: Jost everywhere the app stylesheet reaches (the booking
+     themes have their own stylesheet and keep their own fonts) ---- */
+  --font-sans: "Aitra Jost", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-sans: var(--font-sans);
+
+  /* The default ring (v3 compatibility in app.css) follows the accent. */
+  --default-ring-color: #407ec9;
+}
+
+/* ---------------------------------------------------------------------------
+   Dashboard-scoped tokens: shape, weight and size
+
+   Scoped to the dashboard shell (and the app-wide flash group, which renders
+   outside it) so the auth and onboarding pages keep their own proportions.
+   The Tailwind utilities read these variables at the element, so redefining
+   them on an ancestor is enough. The `--*-token-*` aliases are redefined too:
+   app.css declares them as var(--radius-3xl) etc. on :root, where they are
+   computed once and inherited, so the scoped base value alone would not reach
+   them.
+   --------------------------------------------------------------------------- */
+#dashboard-root,
+#app-flash-group {
+  /* Jost's x-height is smaller than the system UI fonts it replaces; one
+     pixel more on the two workhorse sizes keeps labels as legible as before. */
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-token-2xs: 0.6875rem;
+  --text-token-xs: 0.8125rem;
+  --text-token-sm: 0.9375rem;
+
+  /* Weight: Jost at 900 shouts. The scale moves down a step; hierarchy comes
+     from size and colour as much as from weight. */
+  --font-weight-medium: 500;
+  --font-weight-semibold: 560;
+  --font-weight-bold: 600;
+  --font-weight-extrabold: 640;
+  --font-weight-black: 660;
+
+  /* Tracking: uppercase eyebrows keep a little air, not a lot. */
+  --tracking-wider: 0.04em;
+  --tracking-widest: 0.06em;
+  --tracking-tight: -0.015em;
+
+  /* Radii: one family, tighter than Tymeslot's pill-shaped boxes. */
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.625rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1rem;
+  --radius-4xl: 1.25rem;
+  --radius-5xl: 1.25rem;
+  --radius-token-md: 0.375rem;
+  --radius-token-lg: 0.5rem;
+  --radius-token-xl: 0.625rem;
+  --radius-token-2xl: 0.75rem;
+  --radius-token-3xl: 1rem;
+  --radius-token-4xl: 1.25rem;
+  --radius-token-5xl: 1.25rem;
+
+  font-family: var(--font-sans);
+  font-feature-settings: "kern";
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+}

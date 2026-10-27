@@ -12,5 +12,8 @@
 // Import core bundle (always loaded)
 import "./bundles/core"
 
+// Aitra: dashboard theme switch (see assets/css/aitra/dark.css)
+import "./aitra/theme"
+
 // Note: Connection is handled by route bundles or by an inline script in layouts
 // that don't use route bundles. This ensures hooks are properly set before connection.

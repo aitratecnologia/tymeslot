@@ -1,0 +1,29 @@
+/* ==========================================================================
+   Aitra: Jost, the brand typeface
+
+   Jost 3.710 by indestructible type*, SIL Open Font License 1.1 (licence text
+   in priv/static/fonts/aitra/OFL-jost.txt). Variable font, weight axis
+   100 to 900, converted from the upstream TTF to WOFF2 without subsetting
+   (Latin, Latin Extended and Cyrillic in one file each, ~50 KB / ~60 KB).
+
+   The family name carries an "Aitra" prefix so it never collides with a copy
+   of Jost installed on the visitor's machine. The URLs are absolute (/fonts/…)
+   so Tailwind leaves them alone and phx.digest rewrites them in production,
+   as it does for the booking fonts in scheduling/shared/fonts.css.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Aitra Jost";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/aitra/jost-wght-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Aitra Jost";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/aitra/jost-wght-italic.woff2") format("woff2");
+}

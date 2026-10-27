@@ -1,0 +1,332 @@
+/* ==========================================================================
+   Aitra: dark theme for the dashboard
+
+   Upstream has no dark mode for the dashboard (no `dark:` variants in the
+   templates; base/variables.css only switches four unrelated variables), so
+   this is built from scratch on the tokens in tokens.css.
+
+   How it switches
+   ---------------
+   Every themed value is written once as light-dark(<light>, <dark>). The
+   browser picks a side from the inherited `color-scheme`, which is set on the
+   root element only while the page contains #dashboard-root:
+
+     default                      color-scheme: light dark  → follows the OS
+     html[data-aitra-theme=dark]  color-scheme: dark        → forced dark
+     html[data-aitra-theme=light] color-scheme: light       → forced light
+
+   The attribute is set by assets/js/aitra/theme.js (the toggle in the top
+   bar, remembered in localStorage). Pages without #dashboard-root (the
+   booking page has its own stylesheet anyway, auth, onboarding) never match,
+   so they stay light. The light side of every light-dark() repeats the value
+   from tokens.css; keep the two in sync.
+
+   Browsers without light-dark() (Chrome < 123, Safari < 17.5, Firefox < 120)
+   skip this whole file through @supports and keep the light theme.
+
+   Dark palette (ladder from the brand ink):
+     canvas #101820 · surface #161F29 · raised #1C2733 · hairline white/8%
+     text #E8EDF2 · secondary #B4BEC8 · muted #9AA7B4
+     accent fill #2F6BB3 (white text 5.42:1) · accent text #8FB5E3 (7.83:1)
+     success #71CC98 (8.55:1) · danger text #EF7C82 (6.24:1), fill #CB333B
+     (white text 5.15:1)
+   ========================================================================== */
+
+@supports (color: light-dark(#000, #fff)) {
+  :root:has(#dashboard-root) {
+    color-scheme: light dark;
+  }
+
+  :root[data-aitra-theme="dark"]:has(#dashboard-root) {
+    color-scheme: dark;
+  }
+
+  :root[data-aitra-theme="light"]:has(#dashboard-root) {
+    color-scheme: light;
+  }
+
+  :root:has(#dashboard-root) {
+    /* ---- Surfaces and roles ---- */
+    --aitra-canvas: light-dark(#f5f7f9, #101820);
+    --aitra-surface: light-dark(#ffffff, #161f29);
+    --aitra-surface-2: light-dark(#ffffff, #1c2733);
+    --aitra-hairline: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
+    --aitra-hairline-strong: light-dark(#c4ccd5, #4b5866);
+    --aitra-text: light-dark(#101820, #e8edf2);
+    --aitra-sidebar: light-dark(#101820, #161f29);
+    --aitra-panel: light-dark(#101820, #1c2733);
+    --aitra-accent-text: light-dark(#2f6bb3, #8fb5e3);
+    --aitra-danger-text: light-dark(#cb333b, #ef7c82);
+    --aitra-danger-edge: light-dark(#eea3a7, #7a2e33);
+    /* Fields sit one step below the card: reads as "type here". */
+    --aitra-field: light-dark(#ffffff, #111a23);
+
+    --aitra-elev-1: 0 1px 2px light-dark(rgb(16 24 32 / 0.05), rgb(0 0 0 / 0.3));
+    --aitra-elev-2:
+      0 1px 2px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.3)),
+      0 2px 8px -2px light-dark(rgb(16 24 32 / 0.06), rgb(0 0 0 / 0.35));
+    --aitra-elev-3:
+      0 2px 4px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.3)),
+      0 12px 24px -8px light-dark(rgb(16 24 32 / 0.12), rgb(0 0 0 / 0.5));
+    --aitra-elev-4:
+      0 4px 8px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.35)),
+      0 24px 48px -12px light-dark(rgb(16 24 32 / 0.22), rgb(0 0 0 / 0.6));
+
+    /* ---- Neutrals: the ramp inverts, so "text-tymeslot-900" stays the
+       strongest text and "bg-tymeslot-50" the faintest fill. ---- */
+    --color-tymeslot-50: light-dark(#f6f8fa, #1a2430);
+    --color-tymeslot-100: light-dark(#eef1f4, #212c38);
+    --color-tymeslot-200: light-dark(#e1e6eb, #2b3743);
+    --color-tymeslot-300: light-dark(#c4ccd5, #3a4754);
+    --color-tymeslot-400: light-dark(#8a95a2, #7d8a97);
+    --color-tymeslot-500: light-dark(#647181, #9aa7b4);
+    --color-tymeslot-600: light-dark(#4b5866, #b4bec8);
+    --color-tymeslot-700: light-dark(#36414d, #ced5dc);
+    --color-tymeslot-800: light-dark(#232d38, #dfe4e9);
+    --color-tymeslot-900: light-dark(#101820, #e8edf2);
+    --color-tymeslot-950: light-dark(#0a1016, #f3f6f8);
+
+    --color-neutral-50: light-dark(#f6f8fa, #1a2430);
+    --color-neutral-100: light-dark(#eef1f4, #212c38);
+    --color-neutral-200: light-dark(#e1e6eb, #2b3743);
+    --color-neutral-300: light-dark(#c4ccd5, #3a4754);
+    --color-neutral-400: light-dark(#8a95a2, #7d8a97);
+    --color-neutral-500: light-dark(#647181, #9aa7b4);
+    --color-neutral-600: light-dark(#4b5866, #b4bec8);
+    --color-neutral-700: light-dark(#36414d, #ced5dc);
+    --color-neutral-800: light-dark(#232d38, #dfe4e9);
+    --color-neutral-900: light-dark(#101820, #e8edf2);
+
+    --color-slate-50: light-dark(#f6f8fa, #1a2430);
+    --color-slate-100: light-dark(#eef1f4, #212c38);
+    --color-slate-200: light-dark(#e1e6eb, #2b3743);
+    --color-slate-300: light-dark(#c4ccd5, #3a4754);
+    --color-slate-600: light-dark(#4b5866, #b4bec8);
+    --color-gray-200: light-dark(#e1e6eb, #2b3743);
+
+    /* ---- Accent: tints become dark blue washes, the text shades become
+       light. 400–600 are fills and rings and stay as they are. ---- */
+    --color-turquoise-50: light-dark(#eef4fb, #172536);
+    --color-turquoise-100: light-dark(#dfeaf7, #1b2d44);
+    --color-turquoise-200: light-dark(#c0d5ef, #23395a);
+    --color-turquoise-300: light-dark(#93b7e2, #2f4f7d);
+    --color-turquoise-700: light-dark(#28599a, #a9c6ea);
+    --color-turquoise-800: light-dark(#244a7c, #c4d8f0);
+    --color-turquoise-900: light-dark(#213f66, #dfeaf7);
+    --color-turquoise-950: light-dark(#152841, #eef4fb);
+
+    --color-cyan-50: light-dark(#eef4fb, #172536);
+    --color-cyan-100: light-dark(#dfeaf7, #1b2d44);
+    --color-cyan-200: light-dark(#c0d5ef, #23395a);
+    --color-cyan-700: light-dark(#28599a, #a9c6ea);
+
+    --color-blue-50: light-dark(#eef4fb, #172536);
+    --color-blue-100: light-dark(#dfeaf7, #1b2d44);
+    --color-blue-200: light-dark(#c0d5ef, #23395a);
+    --color-blue-300: light-dark(#93b7e2, #2f4f7d);
+    --color-blue-700: light-dark(#28599a, #a9c6ea);
+    --color-blue-800: light-dark(#244a7c, #c4d8f0);
+    --color-blue-900: light-dark(#213f66, #dfeaf7);
+
+    /* ---- Success, danger, warning: same pattern ---- */
+    --color-green-50: light-dark(#effaf3, #14261d);
+    --color-green-100: light-dark(#dcf3e5, #183024);
+    --color-green-200: light-dark(#bce8cd, #1f3f2f);
+    --color-green-300: light-dark(#96dab3, #2c5a42);
+    --color-green-700: light-dark(#236a44, #8fdcb0);
+    --color-green-800: light-dark(#1f5639, #b3e8c9);
+    --color-green-900: light-dark(#1b4730, #d4f2e0);
+
+    --color-red-50: light-dark(#fdf3f3, #2a1719);
+    --color-red-100: light-dark(#fbe4e5, #351b1e);
+    --color-red-200: light-dark(#f6cbcd, #4a2226);
+    --color-red-300: light-dark(#eea3a7, #6e2d33);
+    --color-red-700: light-dark(#a8282f, #f19a9f);
+    --color-red-800: light-dark(#8a242a, #f6bdc0);
+    --color-red-900: light-dark(#722328, #fadadc);
+
+    --color-amber-50: light-dark(oklch(98.7% 0.022 95.277), #2a2112);
+    --color-amber-100: light-dark(oklch(96.2% 0.059 95.617), #352a14);
+    --color-amber-200: light-dark(oklch(92.4% 0.12 95.746), #4a3a17);
+    --color-amber-300: light-dark(oklch(87.9% 0.169 91.605), #7a5b1c);
+    --color-amber-700: light-dark(oklch(55.5% 0.163 48.998), #fcd34d);
+    --color-amber-800: light-dark(oklch(47.3% 0.137 46.201), #fde68a);
+    --color-amber-900: light-dark(oklch(41.4% 0.112 45.904), #fef3c7);
+    --color-yellow-700: light-dark(oklch(55.4% 0.135 66.442), #fde047);
+    --color-yellow-800: light-dark(oklch(47.6% 0.114 61.907), #fef08a);
+
+    /* ---- Design tokens (base/variables.css) ---- */
+    --color-text-primary: light-dark(#101820, #e8edf2);
+    --color-text-secondary: light-dark(#4b5866, #b4bec8);
+    --color-text-tertiary: light-dark(#647181, #9aa7b4);
+    --color-text-glass-primary: light-dark(#101820, #e8edf2);
+    --color-text-glass-secondary: light-dark(#4b5866, #b4bec8);
+    --color-bg-primary: light-dark(#ffffff, #101820);
+    --color-bg-secondary: light-dark(#fafafa, #161f29);
+    --color-bg-tertiary: light-dark(#f4f4f5, #1c2733);
+    --color-border-light: light-dark(#e1e6eb, #2b3743);
+    --color-border-default: light-dark(#c4ccd5, #3a4754);
+    --color-border-glass-dark: light-dark(#c4ccd5, #3a4754);
+    --color-glass-bg-light: light-dark(#ffffff, #161f29);
+    --color-glass-bg-medium: light-dark(#ffffff, #161f29);
+    --color-glass-bg-strong: light-dark(#ffffff, #161f29);
+    --color-glass-bg-card: light-dark(#ffffff, #161f29);
+    --color-glass-bg-card-enhanced: light-dark(#ffffff, #161f29);
+    --color-error-bg: light-dark(#fdf3f3, #2a1719);
+    --dropdown-bg: light-dark(#ffffff, #1c2733);
+    --dropdown-border: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
+    --dropdown-item-hover-bg: light-dark(#eef1f4, #212c38);
+    --dropdown-item-hover-text: light-dark(#101820, #e8edf2);
+    --dropdown-item-danger-text: light-dark(#cb333b, #ef7c82);
+    --dropdown-item-danger-hover-bg: light-dark(#fdf3f3, #2a1719);
+    --dropdown-divider: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
+  }
+
+  :root:has(#dashboard-root) body {
+    background-color: var(--aitra-canvas);
+  }
+
+  /* -------------------------------------------------------------------------
+     Utilities that hard-code a light value (white, or a shade that is fill and
+     text at once). Same layer as Tailwind's utilities and only (0,1,0)
+     specific through :where(), so a hover:/focus: variant on the same element
+     still wins, exactly as in the light theme. The light side of each value is
+     the utility's own light colour, so the light theme is unchanged.
+     ------------------------------------------------------------------------- */
+  @layer utilities {
+    :where(#dashboard-root, #app-flash-group) .bg-white {
+      background-color: var(--aitra-surface);
+    }
+
+    :where(#dashboard-root) .bg-white\/95 {
+      background-color: light-dark(rgb(255 255 255 / 0.95), rgb(22 31 41 / 0.95));
+    }
+
+    :where(#dashboard-root) .bg-white\/90 {
+      background-color: light-dark(rgb(255 255 255 / 0.9), rgb(22 31 41 / 0.9));
+    }
+
+    :where(#dashboard-root) .bg-white\/50 {
+      background-color: light-dark(rgb(255 255 255 / 0.5), rgb(22 31 41 / 0.5));
+    }
+
+    :where(#dashboard-root) .border-white {
+      border-color: light-dark(#ffffff, #161f29);
+    }
+
+    /* Dark backdrops (video and image overlays, tooltips) stay dark. */
+    :where(#dashboard-root) .bg-tymeslot-900 {
+      background-color: light-dark(#101820, #0a1016);
+    }
+
+    :where(#dashboard-root) .bg-tymeslot-800 {
+      background-color: light-dark(#232d38, #0f161e);
+    }
+
+    :where(#dashboard-root) .bg-tymeslot-900\/80 {
+      background-color: light-dark(rgb(16 24 32 / 0.8), rgb(5 8 11 / 0.8));
+    }
+
+    :where(#dashboard-root) .bg-tymeslot-900\/40 {
+      background-color: light-dark(rgb(16 24 32 / 0.4), rgb(5 8 11 / 0.5));
+    }
+
+    :where(#dashboard-root) .bg-tymeslot-700\/90 {
+      background-color: light-dark(rgb(54 65 77 / 0.9), rgb(10 16 22 / 0.9));
+    }
+
+    :where(#dashboard-root) .bg-tymeslot-600\/70 {
+      background-color: light-dark(rgb(75 88 102 / 0.7), rgb(10 16 22 / 0.7));
+    }
+
+    :where(#dashboard-root) .text-tymeslot-100 {
+      color: #eef1f4;
+    }
+
+    /* Accent, success and danger used as text: lighter tints on dark. */
+    :where(#dashboard-root, #app-flash-group) .text-turquoise-600,
+    :where(#dashboard-root) .text-blue-600,
+    :where(#dashboard-root) .text-cyan-600 {
+      color: light-dark(#2f6bb3, #8fb5e3);
+    }
+
+    :where(#dashboard-root, #app-flash-group) .text-turquoise-500,
+    :where(#dashboard-root) .text-blue-500 {
+      color: light-dark(#407ec9, #8fb5e3);
+    }
+
+    :where(#dashboard-root) .hover\:text-turquoise-600:hover,
+    :where(#dashboard-root) .group:hover .group-hover\:text-turquoise-600 {
+      color: light-dark(#2f6bb3, #8fb5e3);
+    }
+
+    :where(#dashboard-root, #app-flash-group) .text-red-600 {
+      color: light-dark(#cb333b, #ef7c82);
+    }
+
+    :where(#dashboard-root, #app-flash-group) .text-red-500 {
+      color: light-dark(#d74850, #ef7c82);
+    }
+
+    :where(#dashboard-root) .text-green-600 {
+      color: light-dark(#2a8252, #71cc98);
+    }
+
+    :where(#dashboard-root) .text-green-500 {
+      color: light-dark(#3a9f66, #71cc98);
+    }
+  }
+
+  /* -------------------------------------------------------------------------
+     Components that need more than a token
+     ------------------------------------------------------------------------- */
+
+  /* The sidebar is a raised panel in dark: a hairline defines its edge. */
+  #dashboard-sidebar {
+    outline: 1px solid light-dark(transparent, rgb(255 255 255 / 0.06));
+    outline-offset: -1px;
+  }
+
+  /* The "View page" button stays the brightest thing in the panel. */
+  #dashboard-sidebar a.dashboard-nav-link[target="_blank"] {
+    background: light-dark(#ffffff, #e8edf2);
+  }
+
+  /* Dialogs and menus sit one step above the cards. */
+  .modal-overlay .modal-content,
+  #user-menu-panel {
+    background-color: var(--aitra-surface-2);
+  }
+
+  .modal-overlay {
+    background-color: light-dark(rgb(16 24 32 / 0.45), rgb(0 0 0 / 0.6));
+  }
+
+  /* Scrollbars follow the scheme. */
+  #dashboard-root,
+  #dashboard-root .scrollable {
+    scrollbar-color: light-dark(#c4ccd5, #3a4754) transparent;
+  }
+
+  /* Logo in the top bar: the white-text version on the dark bar. `content`
+     is not a colour, so this needs the explicit pair of conditions rather
+     than light-dark(). */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-aitra-theme="light"]) #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
+      content: url("/images/brand/logo-with-text-dark.png");
+    }
+  }
+
+  :root[data-aitra-theme="dark"] #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
+    content: url("/images/brand/logo-with-text-dark.png");
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   The drawer's logo (mobile) sits on the sidebar, which is dark in both
+   themes: always the white-text version.
+   --------------------------------------------------------------------------- */
+#dashboard-sidebar img[src$="logo-with-text.svg"] {
+  content: url("/images/brand/logo-with-text-dark.png");
+  filter: none;
+}

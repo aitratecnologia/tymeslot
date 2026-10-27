@@ -1,0 +1,129 @@
+/* ==========================================================================
+   Aitra: motion and the accessibility media queries
+
+   Motion budget: press feedback 120ms, hovers 120ms colour-only, dialogs
+   200ms ease-out, the phone sheet 320ms on the drawer curve. No hover zoom,
+   no shimmer, no bouncing dialog. (Emil Kowalski / Apple HIG.)
+   ========================================================================== */
+
+/* Glass that upstream applies to the off-canvas drawer and its rows. */
+@media (width < 64rem) {
+  #dashboard-root .dashboard-sidebar,
+  #dashboard-root .dashboard-nav-link:hover,
+  #dashboard-root .dashboard-nav-link--active {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* The drawer slides on the iOS drawer curve rather than ease-in-out. */
+@media (width < 64rem) {
+  #dashboard-sidebar.dashboard-sidebar {
+    transition-timing-function: var(--aitra-ease-drawer), linear;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   prefers-reduced-motion: no movement, keep the feedback.
+   Transitions collapse to near-instant colour changes; dialogs fade instead of
+   scaling or sliding; spinners keep turning (they are status, not decoration).
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  #dashboard-root *:not(.animate-spin, .spinner),
+  #dashboard-root *::before,
+  #dashboard-root *::after,
+  #app-flash-group * {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
+  #dashboard-root .action-button:active,
+  #dashboard-root .icon-button:active {
+    transform: none !important;
+  }
+
+  .modal-overlay .modal-content {
+    animation: aitra-fade 160ms ease-out !important;
+  }
+
+  @keyframes aitra-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   prefers-reduced-transparency: every surface solid, scrims darker.
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-transparency: reduce) {
+  #dashboard-root *,
+  .modal-overlay,
+  #app-flash-group * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #dashboard-root [class*="bg-white/"] {
+    background-color: #fff;
+  }
+
+  .modal-overlay {
+    background-color: rgb(16 24 32 / 0.72);
+  }
+
+  #dashboard-sidebar-overlay {
+    background-color: rgb(16 24 32 / 0.72);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   prefers-contrast: more: stronger edges and text, thicker focus.
+   --------------------------------------------------------------------------- */
+@media (prefers-contrast: more) {
+  :root {
+    --aitra-hairline: #8a95a2;
+    --aitra-hairline-strong: #4b5866;
+    --color-tymeslot-400: #4b5866;
+    --color-tymeslot-500: #36414d;
+  }
+
+  /* The same, theme-aware, where dark.css is active. */
+  @supports (color: light-dark(#000, #fff)) {
+    :root:has(#dashboard-root) {
+      --aitra-hairline: light-dark(#8a95a2, #7d8a97);
+      --aitra-hairline-strong: light-dark(#4b5866, #9aa7b4);
+      --color-tymeslot-400: light-dark(#4b5866, #b4bec8);
+      --color-tymeslot-500: light-dark(#36414d, #ced5dc);
+    }
+  }
+
+  #dashboard-sidebar .dashboard-nav-link {
+    color: #fff;
+  }
+
+  #dashboard-sidebar .dashboard-nav-section-title {
+    color: rgb(255 255 255 / 0.8);
+  }
+
+  #dashboard-sidebar .dashboard-nav-link--active {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+  }
+
+  #dashboard-root :focus-visible,
+  .modal-content :focus-visible {
+    outline: 3px solid var(--aitra-text);
+    outline-offset: 2px;
+  }
+
+  .action-button--primary,
+  .action-button--danger {
+    border-color: var(--aitra-text);
+  }
+}

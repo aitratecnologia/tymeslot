@@ -43,6 +43,9 @@
 /* Import reCAPTCHA styles */
 @import "./recaptcha.css";
 
+/* Aitra: theme layer (see aitra/README.md) */
+@import "./aitra/theme.css";
+
 /* ===========================================================================
    Tailwind v4 CSS-first configuration
    ---------------------------------------------------------------------------

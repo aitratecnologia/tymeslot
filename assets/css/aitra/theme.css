@@ -1,0 +1,24 @@
+/* ==========================================================================
+   Aitra Cal: theme layer for the logged-in dashboard
+
+   Imported once, last, from app.css. Everything Aitra changes visually lives
+   in this folder so upstream merges never conflict on it: no upstream
+   template or stylesheet is edited. See aitra/README.md (Patches).
+
+     fonts.css       Jost (brand typeface), self-hosted under /fonts/aitra/
+     tokens.css      palette (ink, blue, green, red), neutrals, type, radii
+     shell.css       top bar, sidebar, canvas, page header, signature panels
+     components.css  cards, buttons, forms, tables, badges, dialogs, toasts
+     dark.css        dark theme (follows the OS; toggle in assets/js/aitra)
+     motion.css      motion budget, reduced motion/transparency, contrast
+
+   The booking pages (assets/css/scheduling) have their own stylesheets and
+   are not affected.
+   ========================================================================== */
+
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./shell.css";
+@import "./components.css";
+@import "./dark.css";
+@import "./motion.css";
