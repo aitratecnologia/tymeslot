@@ -4,7 +4,7 @@ defmodule TymeslotWeb.Components.CoreComponents.Brand do
   use Gettext, backend: TymeslotWeb.Gettext
 
   @doc """
-  Renders the Tymeslot logo.
+  Renders the Aitra Cal logo (assets in priv/static/images/brand, see aitra/README.md).
 
   ## Attributes
     * `mode` - Either :full (logo + text) or :icon (logo only). Defaults to :full.
@@ -22,15 +22,15 @@ defmodule TymeslotWeb.Components.CoreComponents.Brand do
       <%= if @mode == :full do %>
         <img
           src="/images/brand/logo-with-text.svg"
-          alt="Tymeslot"
+          alt="Aitra Cal"
           width="620"
-          height="200"
+          height="248"
           class={[@img_class, "w-auto"]}
         />
       <% else %>
         <img
           src="/images/brand/logo.svg"
-          alt={dgettext("common", "Tymeslot logo")}
+          alt="Aitra"
           width="200"
           height="200"
           class={[@img_class, "w-auto"]}

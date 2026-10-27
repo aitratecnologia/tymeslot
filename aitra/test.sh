@@ -7,9 +7,8 @@ cd "$(git rev-parse --show-toplevel)"
 BUILDER=${BUILDER:-cool-builder}
 ELIXIR_IMAGE=$(sed -n 's/^FROM \(hexpm\/elixir:[^ ]*\) AS build$/\1/p' Dockerfile.docker)
 RUN=tymeslot-test-$$
-# Inclui alterações ainda sem commit (git stash create não mexe na árvore).
-REV=$(git stash create); REV=${REV:-HEAD}
-git archive --format=tar "$REV" | ssh "$BUILDER" "mkdir -p /tmp/$RUN && tar -x -C /tmp/$RUN"
+# Envia a árvore de trabalho (ficheiros seguidos e novos, sem os ignorados).
+git ls-files -z -co --exclude-standard | COPYFILE_DISABLE=1 tar --null -T - -cf - | ssh "$BUILDER" "mkdir -p /tmp/$RUN && tar -x -C /tmp/$RUN"
 ssh "$BUILDER" bash -s -- "$RUN" "$ELIXIR_IMAGE" "$@" <<'REMOTE'
 set -euo pipefail
 RUN=$1; IMG=$2; shift 2

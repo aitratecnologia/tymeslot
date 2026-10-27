@@ -57,7 +57,7 @@ defmodule TymeslotWeb.SchedulingOgMetaTest do
       assert html =~ ~s(<meta property="og:title" content="Schedule with Ada Lovelace")
       assert html =~ "Book a meeting with Ada Lovelace."
       assert html =~ ~s(<meta property="og:type" content="profile")
-      assert html =~ ~s(<meta property="og:site_name" content="Tymeslot")
+      assert html =~ ~s(<meta property="og:site_name" content="Aitra Cal")
     end
 
     test "builds an absolute og:url for the booking page", %{conn: conn, username: username} do

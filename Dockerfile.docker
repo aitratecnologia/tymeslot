@@ -49,6 +49,9 @@ RUN mix deps.get --only prod
 COPY . .
 RUN rm -rf priv/static/assets/
 
+# Aitra: rebrand translation catalogues before compiling (see aitra/brand.exs)
+RUN mix deps.compile expo && elixir -pa _build/prod/lib/expo/ebin aitra/brand.exs
+
 # Compile dependencies and application code
 RUN mix do deps.compile + compile
 
