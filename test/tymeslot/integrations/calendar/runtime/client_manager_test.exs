@@ -451,6 +451,36 @@ defmodule Tymeslot.Integrations.Calendar.Runtime.ClientManagerTest do
       assert %{provider_type: :caldav} = ClientManager.resolve_client(meeting)
     end
 
+    test "addresses the calendar the Meeting was booked into, not the default booking calendar",
+         %{user: user} do
+      integration = insert_two_calendar_integration(user, "caldav")
+      insert(:profile, user: user)
+
+      meeting = %MeetingSchema{
+        organizer_user_id: user.id,
+        calendar_integration_id: integration.id,
+        calendar_path: "/cal/projects/"
+      }
+
+      assert %{client: %{calendar_paths: ["/cal/projects/"]}} =
+               ClientManager.resolve_client(meeting)
+    end
+
+    test "falls back to the default booking calendar when the Meeting's calendar is gone",
+         %{user: user} do
+      integration = insert_two_calendar_integration(user, "caldav")
+      insert(:profile, user: user)
+
+      meeting = %MeetingSchema{
+        organizer_user_id: user.id,
+        calendar_integration_id: integration.id,
+        calendar_path: "/cal/removed/"
+      }
+
+      assert %{client: %{calendar_paths: ["/cal/bookings/"]}} =
+               ClientManager.resolve_client(meeting)
+    end
+
     test "resolves the user's primary client when given a user id", %{user: user} do
       integration =
         insert(:calendar_integration,

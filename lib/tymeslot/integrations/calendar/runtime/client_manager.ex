@@ -212,9 +212,9 @@ defmodule Tymeslot.Integrations.Calendar.Runtime.ClientManager do
           client() | nil
   def resolve_client(context) do
     case context do
-      %MeetingSchema{calendar_integration_id: integration_id, organizer_user_id: user_id}
+      %MeetingSchema{calendar_integration_id: integration_id} = meeting
       when is_integer(integration_id) ->
-        get_client_by_integration_id(integration_id, user_id)
+        meeting_client(meeting)
 
       %MeetingSchema{organizer_user_id: user_id} when is_integer(user_id) ->
         client(user_id)
@@ -231,6 +231,30 @@ defmodule Tymeslot.Integrations.Calendar.Runtime.ClientManager do
   end
 
   # --- Private Implementation ---
+
+  # A meeting's event lives in the calendar it was created in, which is the
+  # calendar its meeting type targets and not necessarily the integration's
+  # default booking calendar. Updates and deletes must address that calendar,
+  # or a CalDAV server finds no event at the default calendar's URL and
+  # refuses to re-create it there because the UID already exists elsewhere
+  # (iCloud answers 404 then 412). A calendar that is no longer listed falls
+  # back to the integration's booking calendar, as before.
+  defp meeting_client(%MeetingSchema{calendar_path: path} = meeting) when is_binary(path) do
+    case Management.fetch_integration_for_user(
+           meeting.calendar_integration_id,
+           meeting.organizer_user_id
+         ) do
+      {:ok, integration} ->
+        booking_client_for_integration(%{integration | default_booking_calendar_id: path}) ||
+          booking_client_for_integration(integration)
+
+      {:error, :not_found} ->
+        nil
+    end
+  end
+
+  defp meeting_client(%MeetingSchema{} = meeting),
+    do: get_client_by_integration_id(meeting.calendar_integration_id, meeting.organizer_user_id)
 
   # The calendar a meeting or meeting type recorded belongs to the integration
   # it recorded. Once resolution has fallen through to another integration,
