@@ -74,11 +74,11 @@
   }
 
   .modal-overlay {
-    background-color: rgb(16 24 32 / 0.72);
+    background-color: rgb(8 52 59 / 0.72);
   }
 
   #dashboard-sidebar-overlay {
-    background-color: rgb(16 24 32 / 0.72);
+    background-color: rgb(8 52 59 / 0.72);
   }
 }
 
@@ -87,19 +87,19 @@
    --------------------------------------------------------------------------- */
 @media (prefers-contrast: more) {
   :root {
-    --aitra-hairline: #8a95a2;
-    --aitra-hairline-strong: #4b5866;
-    --color-tymeslot-400: #4b5866;
-    --color-tymeslot-500: #36414d;
+    --aitra-hairline: #7f9599;
+    --aitra-hairline-strong: #3d4f53;
+    --color-tymeslot-400: #3d4f53;
+    --color-tymeslot-500: #2c3b3f;
   }
 
   /* The same, theme-aware, where dark.css is active. */
   @supports (color: light-dark(#000, #fff)) {
     :root:has(#dashboard-root) {
-      --aitra-hairline: light-dark(#8a95a2, #7d8a97);
-      --aitra-hairline-strong: light-dark(#4b5866, #9aa7b4);
-      --color-tymeslot-400: light-dark(#4b5866, #b4bec8);
-      --color-tymeslot-500: light-dark(#36414d, #ced5dc);
+      --aitra-hairline: light-dark(#7f9599, #7f9fa4);
+      --aitra-hairline-strong: light-dark(#3d4f53, #94b8bd);
+      --color-tymeslot-400: light-dark(#3d4f53, #b6cfd2);
+      --color-tymeslot-500: light-dark(#2c3b3f, #cfe0e2);
     }
   }
 

@@ -23,15 +23,15 @@ defmodule TymeslotWeb.Components.CoreComponents.Brand do
         <img
           src="/images/brand/logo-with-text.svg"
           alt="Aitra Cal"
-          width="620"
-          height="248"
+          width="490"
+          height="103"
           class={[@img_class, "w-auto"]}
         />
       <% else %>
         <img
           src="/images/brand/logo.svg"
           alt="Aitra"
-          width="200"
+          width="201"
           height="200"
           class={[@img_class, "w-auto"]}
         />

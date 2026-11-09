@@ -24,12 +24,13 @@
    Browsers without light-dark() (Chrome < 123, Safari < 17.5, Firefox < 120)
    skip this whole file through @supports and keep the light theme.
 
-   Dark palette (ladder from the brand ink):
-     canvas #101820 · surface #161F29 · raised #1C2733 · hairline white/8%
-     text #E8EDF2 · secondary #B4BEC8 · muted #9AA7B4
-     accent fill #2F6BB3 (white text 5.42:1) · accent text #8FB5E3 (7.83:1)
-     success #71CC98 (8.55:1) · danger text #EF7C82 (6.24:1), fill #CB333B
-     (white text 5.15:1)
+   Dark palette (ladder down from petróleo escuro #08343B):
+     canvas #061E22 · surface #0A2A30 · raised #0E343B · hairline white/8%
+     text #E8F2F3 (15.2:1) · secondary #B6CFD2 (9.3:1) · muted #94B8BD (7.1:1)
+     accent fill menta #37C5B0 with petróleo escuro text (6.25:1), as in the
+     landing's dark bands; petróleo itself would vanish on these surfaces
+     accent text #8FE3D6 (10.2:1) · success menta (7.1:1)
+     danger text #FF8A80 (6.6:1), fill #B42318 (white text 6.57:1)
    ========================================================================== */
 
 @supports (color: light-dark(#000, #fff)) {
@@ -47,103 +48,106 @@
 
   :root:has(#dashboard-root) {
     /* ---- Surfaces and roles ---- */
-    --aitra-canvas: light-dark(#f5f7f9, #101820);
-    --aitra-surface: light-dark(#ffffff, #161f29);
-    --aitra-surface-2: light-dark(#ffffff, #1c2733);
-    --aitra-hairline: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
-    --aitra-hairline-strong: light-dark(#c4ccd5, #4b5866);
-    --aitra-text: light-dark(#101820, #e8edf2);
-    --aitra-sidebar: light-dark(#101820, #161f29);
-    --aitra-panel: light-dark(#101820, #1c2733);
-    --aitra-accent-text: light-dark(#2f6bb3, #8fb5e3);
-    --aitra-danger-text: light-dark(#cb333b, #ef7c82);
-    --aitra-danger-edge: light-dark(#eea3a7, #7a2e33);
+    --aitra-canvas: light-dark(#f1f7f7, #061e22);
+    --aitra-surface: light-dark(#ffffff, #0a2a30);
+    --aitra-surface-2: light-dark(#ffffff, #0e343b);
+    --aitra-hairline: light-dark(#dce9eb, rgb(255 255 255 / 0.08));
+    --aitra-hairline-strong: light-dark(#c7dcdf, #3a6066);
+    --aitra-text: light-dark(#161616, #e8f2f3);
+    --aitra-sidebar: light-dark(#08343b, #0a2a30);
+    --aitra-panel: light-dark(#08343b, #0e343b);
+    --aitra-accent: light-dark(#075b67, #37c5b0);
+    --aitra-accent-hover: light-dark(#064c56, #4fd1bd);
+    --aitra-on-accent: light-dark(#ffffff, #08343b);
+    --aitra-accent-text: light-dark(#075b67, #8fe3d6);
+    --aitra-danger-text: light-dark(#b42318, #ff8a80);
+    --aitra-danger-edge: light-dark(#fda29b, #7a2e26);
     /* Fields sit one step below the card: reads as "type here". */
-    --aitra-field: light-dark(#ffffff, #111a23);
+    --aitra-field: light-dark(#ffffff, #05191c);
 
-    --aitra-elev-1: 0 1px 2px light-dark(rgb(16 24 32 / 0.05), rgb(0 0 0 / 0.3));
+    --aitra-elev-1: 0 1px 2px light-dark(rgb(8 52 59 / 0.05), rgb(0 0 0 / 0.3));
     --aitra-elev-2:
-      0 1px 2px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.3)),
-      0 2px 8px -2px light-dark(rgb(16 24 32 / 0.06), rgb(0 0 0 / 0.35));
+      0 1px 2px light-dark(rgb(8 52 59 / 0.04), rgb(0 0 0 / 0.3)),
+      0 2px 8px -2px light-dark(rgb(8 52 59 / 0.06), rgb(0 0 0 / 0.35));
     --aitra-elev-3:
-      0 2px 4px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.3)),
-      0 12px 24px -8px light-dark(rgb(16 24 32 / 0.12), rgb(0 0 0 / 0.5));
+      0 2px 4px light-dark(rgb(8 52 59 / 0.04), rgb(0 0 0 / 0.3)),
+      0 12px 24px -8px light-dark(rgb(8 52 59 / 0.12), rgb(0 0 0 / 0.5));
     --aitra-elev-4:
-      0 4px 8px light-dark(rgb(16 24 32 / 0.04), rgb(0 0 0 / 0.35)),
-      0 24px 48px -12px light-dark(rgb(16 24 32 / 0.22), rgb(0 0 0 / 0.6));
+      0 4px 8px light-dark(rgb(8 52 59 / 0.04), rgb(0 0 0 / 0.35)),
+      0 24px 48px -12px light-dark(rgb(8 52 59 / 0.22), rgb(0 0 0 / 0.6));
 
     /* ---- Neutrals: the ramp inverts, so "text-tymeslot-900" stays the
        strongest text and "bg-tymeslot-50" the faintest fill. ---- */
-    --color-tymeslot-50: light-dark(#f6f8fa, #1a2430);
-    --color-tymeslot-100: light-dark(#eef1f4, #212c38);
-    --color-tymeslot-200: light-dark(#e1e6eb, #2b3743);
-    --color-tymeslot-300: light-dark(#c4ccd5, #3a4754);
-    --color-tymeslot-400: light-dark(#8a95a2, #7d8a97);
-    --color-tymeslot-500: light-dark(#647181, #9aa7b4);
-    --color-tymeslot-600: light-dark(#4b5866, #b4bec8);
-    --color-tymeslot-700: light-dark(#36414d, #ced5dc);
-    --color-tymeslot-800: light-dark(#232d38, #dfe4e9);
-    --color-tymeslot-900: light-dark(#101820, #e8edf2);
-    --color-tymeslot-950: light-dark(#0a1016, #f3f6f8);
+    --color-tymeslot-50: light-dark(#f6fafa, #0d2e34);
+    --color-tymeslot-100: light-dark(#ebf3f4, #12373e);
+    --color-tymeslot-200: light-dark(#dce9eb, #1a434a);
+    --color-tymeslot-300: light-dark(#c7dcdf, #29545b);
+    --color-tymeslot-400: light-dark(#7f9599, #7f9fa4);
+    --color-tymeslot-500: light-dark(#566a6e, #94b8bd);
+    --color-tymeslot-600: light-dark(#3d4f53, #b6cfd2);
+    --color-tymeslot-700: light-dark(#2c3b3f, #cfe0e2);
+    --color-tymeslot-800: light-dark(#1f2a2d, #e0ecee);
+    --color-tymeslot-900: light-dark(#161616, #e8f2f3);
+    --color-tymeslot-950: light-dark(#0b0f10, #f3f8f8);
 
-    --color-neutral-50: light-dark(#f6f8fa, #1a2430);
-    --color-neutral-100: light-dark(#eef1f4, #212c38);
-    --color-neutral-200: light-dark(#e1e6eb, #2b3743);
-    --color-neutral-300: light-dark(#c4ccd5, #3a4754);
-    --color-neutral-400: light-dark(#8a95a2, #7d8a97);
-    --color-neutral-500: light-dark(#647181, #9aa7b4);
-    --color-neutral-600: light-dark(#4b5866, #b4bec8);
-    --color-neutral-700: light-dark(#36414d, #ced5dc);
-    --color-neutral-800: light-dark(#232d38, #dfe4e9);
-    --color-neutral-900: light-dark(#101820, #e8edf2);
+    --color-neutral-50: light-dark(#f6fafa, #0d2e34);
+    --color-neutral-100: light-dark(#ebf3f4, #12373e);
+    --color-neutral-200: light-dark(#dce9eb, #1a434a);
+    --color-neutral-300: light-dark(#c7dcdf, #29545b);
+    --color-neutral-400: light-dark(#7f9599, #7f9fa4);
+    --color-neutral-500: light-dark(#566a6e, #94b8bd);
+    --color-neutral-600: light-dark(#3d4f53, #b6cfd2);
+    --color-neutral-700: light-dark(#2c3b3f, #cfe0e2);
+    --color-neutral-800: light-dark(#1f2a2d, #e0ecee);
+    --color-neutral-900: light-dark(#161616, #e8f2f3);
 
-    --color-slate-50: light-dark(#f6f8fa, #1a2430);
-    --color-slate-100: light-dark(#eef1f4, #212c38);
-    --color-slate-200: light-dark(#e1e6eb, #2b3743);
-    --color-slate-300: light-dark(#c4ccd5, #3a4754);
-    --color-slate-600: light-dark(#4b5866, #b4bec8);
-    --color-gray-200: light-dark(#e1e6eb, #2b3743);
+    --color-slate-50: light-dark(#f6fafa, #0d2e34);
+    --color-slate-100: light-dark(#ebf3f4, #12373e);
+    --color-slate-200: light-dark(#dce9eb, #1a434a);
+    --color-slate-300: light-dark(#c7dcdf, #29545b);
+    --color-slate-600: light-dark(#3d4f53, #b6cfd2);
+    --color-gray-200: light-dark(#dce9eb, #1a434a);
 
-    /* ---- Accent: tints become dark blue washes, the text shades become
+    /* ---- Accent: tints become dark petróleo washes, the text shades become
        light. 400–600 are fills and rings and stay as they are. ---- */
-    --color-turquoise-50: light-dark(#eef4fb, #172536);
-    --color-turquoise-100: light-dark(#dfeaf7, #1b2d44);
-    --color-turquoise-200: light-dark(#c0d5ef, #23395a);
-    --color-turquoise-300: light-dark(#93b7e2, #2f4f7d);
-    --color-turquoise-700: light-dark(#28599a, #a9c6ea);
-    --color-turquoise-800: light-dark(#244a7c, #c4d8f0);
-    --color-turquoise-900: light-dark(#213f66, #dfeaf7);
-    --color-turquoise-950: light-dark(#152841, #eef4fb);
+    --color-turquoise-50: light-dark(#eef7f7, #0b3238);
+    --color-turquoise-100: light-dark(#d9eeee, #0d3a41);
+    --color-turquoise-200: light-dark(#b3dcdc, #12474f);
+    --color-turquoise-300: light-dark(#7fc3c5, #1a5c64);
+    --color-turquoise-700: light-dark(#064c56, #9fe0d6);
+    --color-turquoise-800: light-dark(#073f47, #c2ece5);
+    --color-turquoise-900: light-dark(#08343b, #dff5f1);
+    --color-turquoise-950: light-dark(#052226, #eefaf8);
 
-    --color-cyan-50: light-dark(#eef4fb, #172536);
-    --color-cyan-100: light-dark(#dfeaf7, #1b2d44);
-    --color-cyan-200: light-dark(#c0d5ef, #23395a);
-    --color-cyan-700: light-dark(#28599a, #a9c6ea);
+    --color-cyan-50: light-dark(#eef7f7, #0b3238);
+    --color-cyan-100: light-dark(#d9eeee, #0d3a41);
+    --color-cyan-200: light-dark(#b3dcdc, #12474f);
+    --color-cyan-700: light-dark(#064c56, #9fe0d6);
 
-    --color-blue-50: light-dark(#eef4fb, #172536);
-    --color-blue-100: light-dark(#dfeaf7, #1b2d44);
-    --color-blue-200: light-dark(#c0d5ef, #23395a);
-    --color-blue-300: light-dark(#93b7e2, #2f4f7d);
-    --color-blue-700: light-dark(#28599a, #a9c6ea);
-    --color-blue-800: light-dark(#244a7c, #c4d8f0);
-    --color-blue-900: light-dark(#213f66, #dfeaf7);
+    --color-blue-50: light-dark(#eef7f7, #0b3238);
+    --color-blue-100: light-dark(#d9eeee, #0d3a41);
+    --color-blue-200: light-dark(#b3dcdc, #12474f);
+    --color-blue-300: light-dark(#7fc3c5, #1a5c64);
+    --color-blue-700: light-dark(#064c56, #9fe0d6);
+    --color-blue-800: light-dark(#073f47, #c2ece5);
+    --color-blue-900: light-dark(#08343b, #dff5f1);
 
     /* ---- Success, danger, warning: same pattern ---- */
-    --color-green-50: light-dark(#effaf3, #14261d);
-    --color-green-100: light-dark(#dcf3e5, #183024);
-    --color-green-200: light-dark(#bce8cd, #1f3f2f);
-    --color-green-300: light-dark(#96dab3, #2c5a42);
-    --color-green-700: light-dark(#236a44, #8fdcb0);
-    --color-green-800: light-dark(#1f5639, #b3e8c9);
-    --color-green-900: light-dark(#1b4730, #d4f2e0);
+    --color-green-50: light-dark(#ecf8f5, #0a2b26);
+    --color-green-100: light-dark(#d3f0e9, #0c342e);
+    --color-green-200: light-dark(#a9e3d6, #10433b);
+    --color-green-300: light-dark(#74d4c1, #175a4f);
+    --color-green-700: light-dark(#0d5f4e, #7fe0cd);
+    --color-green-800: light-dark(#0c4c3f, #aeebdf);
+    --color-green-900: light-dark(#0a3f35, #d5f5ee);
 
-    --color-red-50: light-dark(#fdf3f3, #2a1719);
-    --color-red-100: light-dark(#fbe4e5, #351b1e);
-    --color-red-200: light-dark(#f6cbcd, #4a2226);
-    --color-red-300: light-dark(#eea3a7, #6e2d33);
-    --color-red-700: light-dark(#a8282f, #f19a9f);
-    --color-red-800: light-dark(#8a242a, #f6bdc0);
-    --color-red-900: light-dark(#722328, #fadadc);
+    --color-red-50: light-dark(#fef3f2, #2c1513);
+    --color-red-100: light-dark(#fee4e2, #381917);
+    --color-red-200: light-dark(#fecdca, #4d201c);
+    --color-red-300: light-dark(#fda29b, #702b24);
+    --color-red-700: light-dark(#912018, #ff9e95);
+    --color-red-800: light-dark(#7a271a, #ffc2bb);
+    --color-red-900: light-dark(#55160c, #ffdcd7);
 
     --color-amber-50: light-dark(oklch(98.7% 0.022 95.277), #2a2112);
     --color-amber-100: light-dark(oklch(96.2% 0.059 95.617), #352a14);
@@ -156,30 +160,30 @@
     --color-yellow-800: light-dark(oklch(47.6% 0.114 61.907), #fef08a);
 
     /* ---- Design tokens (base/variables.css) ---- */
-    --color-text-primary: light-dark(#101820, #e8edf2);
-    --color-text-secondary: light-dark(#4b5866, #b4bec8);
-    --color-text-tertiary: light-dark(#647181, #9aa7b4);
-    --color-text-glass-primary: light-dark(#101820, #e8edf2);
-    --color-text-glass-secondary: light-dark(#4b5866, #b4bec8);
-    --color-bg-primary: light-dark(#ffffff, #101820);
-    --color-bg-secondary: light-dark(#fafafa, #161f29);
-    --color-bg-tertiary: light-dark(#f4f4f5, #1c2733);
-    --color-border-light: light-dark(#e1e6eb, #2b3743);
-    --color-border-default: light-dark(#c4ccd5, #3a4754);
-    --color-border-glass-dark: light-dark(#c4ccd5, #3a4754);
-    --color-glass-bg-light: light-dark(#ffffff, #161f29);
-    --color-glass-bg-medium: light-dark(#ffffff, #161f29);
-    --color-glass-bg-strong: light-dark(#ffffff, #161f29);
-    --color-glass-bg-card: light-dark(#ffffff, #161f29);
-    --color-glass-bg-card-enhanced: light-dark(#ffffff, #161f29);
-    --color-error-bg: light-dark(#fdf3f3, #2a1719);
-    --dropdown-bg: light-dark(#ffffff, #1c2733);
-    --dropdown-border: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
-    --dropdown-item-hover-bg: light-dark(#eef1f4, #212c38);
-    --dropdown-item-hover-text: light-dark(#101820, #e8edf2);
-    --dropdown-item-danger-text: light-dark(#cb333b, #ef7c82);
-    --dropdown-item-danger-hover-bg: light-dark(#fdf3f3, #2a1719);
-    --dropdown-divider: light-dark(#e1e6eb, rgb(255 255 255 / 0.08));
+    --color-text-primary: light-dark(#161616, #e8f2f3);
+    --color-text-secondary: light-dark(#3d4f53, #b6cfd2);
+    --color-text-tertiary: light-dark(#566a6e, #94b8bd);
+    --color-text-glass-primary: light-dark(#161616, #e8f2f3);
+    --color-text-glass-secondary: light-dark(#3d4f53, #b6cfd2);
+    --color-bg-primary: light-dark(#ffffff, #061e22);
+    --color-bg-secondary: light-dark(#fafafa, #0a2a30);
+    --color-bg-tertiary: light-dark(#f4f4f5, #0e343b);
+    --color-border-light: light-dark(#dce9eb, #1a434a);
+    --color-border-default: light-dark(#c7dcdf, #29545b);
+    --color-border-glass-dark: light-dark(#c7dcdf, #29545b);
+    --color-glass-bg-light: light-dark(#ffffff, #0a2a30);
+    --color-glass-bg-medium: light-dark(#ffffff, #0a2a30);
+    --color-glass-bg-strong: light-dark(#ffffff, #0a2a30);
+    --color-glass-bg-card: light-dark(#ffffff, #0a2a30);
+    --color-glass-bg-card-enhanced: light-dark(#ffffff, #0a2a30);
+    --color-error-bg: light-dark(#fef3f2, #2c1513);
+    --dropdown-bg: light-dark(#ffffff, #0e343b);
+    --dropdown-border: light-dark(#dce9eb, rgb(255 255 255 / 0.08));
+    --dropdown-item-hover-bg: light-dark(#ebf3f4, #12373e);
+    --dropdown-item-hover-text: light-dark(#161616, #e8f2f3);
+    --dropdown-item-danger-text: light-dark(#b42318, #ff8a80);
+    --dropdown-item-danger-hover-bg: light-dark(#fef3f2, #2c1513);
+    --dropdown-divider: light-dark(#dce9eb, rgb(255 255 255 / 0.08));
   }
 
   :root:has(#dashboard-root) body {
@@ -199,81 +203,81 @@
     }
 
     :where(#dashboard-root) .bg-white\/95 {
-      background-color: light-dark(rgb(255 255 255 / 0.95), rgb(22 31 41 / 0.95));
+      background-color: light-dark(rgb(255 255 255 / 0.95), rgb(10 42 48 / 0.95));
     }
 
     :where(#dashboard-root) .bg-white\/90 {
-      background-color: light-dark(rgb(255 255 255 / 0.9), rgb(22 31 41 / 0.9));
+      background-color: light-dark(rgb(255 255 255 / 0.9), rgb(10 42 48 / 0.9));
     }
 
     :where(#dashboard-root) .bg-white\/50 {
-      background-color: light-dark(rgb(255 255 255 / 0.5), rgb(22 31 41 / 0.5));
+      background-color: light-dark(rgb(255 255 255 / 0.5), rgb(10 42 48 / 0.5));
     }
 
     :where(#dashboard-root) .border-white {
-      border-color: light-dark(#ffffff, #161f29);
+      border-color: light-dark(#ffffff, #0a2a30);
     }
 
     /* Dark backdrops (video and image overlays, tooltips) stay dark. */
     :where(#dashboard-root) .bg-tymeslot-900 {
-      background-color: light-dark(#101820, #0a1016);
+      background-color: light-dark(#161616, #031417);
     }
 
     :where(#dashboard-root) .bg-tymeslot-800 {
-      background-color: light-dark(#232d38, #0f161e);
+      background-color: light-dark(#1f2a2d, #04181b);
     }
 
     :where(#dashboard-root) .bg-tymeslot-900\/80 {
-      background-color: light-dark(rgb(16 24 32 / 0.8), rgb(5 8 11 / 0.8));
+      background-color: light-dark(rgb(8 52 59 / 0.8), rgb(2 14 16 / 0.8));
     }
 
     :where(#dashboard-root) .bg-tymeslot-900\/40 {
-      background-color: light-dark(rgb(16 24 32 / 0.4), rgb(5 8 11 / 0.5));
+      background-color: light-dark(rgb(8 52 59 / 0.4), rgb(2 14 16 / 0.5));
     }
 
     :where(#dashboard-root) .bg-tymeslot-700\/90 {
-      background-color: light-dark(rgb(54 65 77 / 0.9), rgb(10 16 22 / 0.9));
+      background-color: light-dark(rgb(44 59 63 / 0.9), rgb(3 20 23 / 0.9));
     }
 
     :where(#dashboard-root) .bg-tymeslot-600\/70 {
-      background-color: light-dark(rgb(75 88 102 / 0.7), rgb(10 16 22 / 0.7));
+      background-color: light-dark(rgb(61 79 83 / 0.7), rgb(3 20 23 / 0.7));
     }
 
     :where(#dashboard-root) .text-tymeslot-100 {
-      color: #eef1f4;
+      color: #ebf3f4;
     }
 
     /* Accent, success and danger used as text: lighter tints on dark. */
     :where(#dashboard-root, #app-flash-group) .text-turquoise-600,
     :where(#dashboard-root) .text-blue-600,
     :where(#dashboard-root) .text-cyan-600 {
-      color: light-dark(#2f6bb3, #8fb5e3);
+      color: light-dark(#075b67, #8fe3d6);
     }
 
     :where(#dashboard-root, #app-flash-group) .text-turquoise-500,
     :where(#dashboard-root) .text-blue-500 {
-      color: light-dark(#407ec9, #8fb5e3);
+      color: light-dark(#13808a, #8fe3d6);
     }
 
     :where(#dashboard-root) .hover\:text-turquoise-600:hover,
     :where(#dashboard-root) .group:hover .group-hover\:text-turquoise-600 {
-      color: light-dark(#2f6bb3, #8fb5e3);
+      color: light-dark(#075b67, #8fe3d6);
     }
 
     :where(#dashboard-root, #app-flash-group) .text-red-600 {
-      color: light-dark(#cb333b, #ef7c82);
+      color: light-dark(#b42318, #ff8a80);
     }
 
     :where(#dashboard-root, #app-flash-group) .text-red-500 {
-      color: light-dark(#d74850, #ef7c82);
+      color: light-dark(#d92d20, #ff8a80);
     }
 
     :where(#dashboard-root) .text-green-600 {
-      color: light-dark(#2a8252, #71cc98);
+      color: light-dark(#11745f, #37c5b0);
     }
 
     :where(#dashboard-root) .text-green-500 {
-      color: light-dark(#3a9f66, #71cc98);
+      color: light-dark(#17957a, #37c5b0);
     }
   }
 
@@ -289,7 +293,14 @@
 
   /* The "View page" button stays the brightest thing in the panel. */
   #dashboard-sidebar a.dashboard-nav-link[target="_blank"] {
-    background: light-dark(#ffffff, #e8edf2);
+    background: light-dark(#ffffff, #e8f2f3);
+  }
+
+  /* Filled primary: white on petróleo in light, petróleo escuro on menta
+     in dark. */
+  #dashboard-root .action-button--primary,
+  .modal-content .action-button--primary {
+    color: var(--aitra-on-accent);
   }
 
   /* Dialogs and menus sit one step above the cards. */
@@ -299,13 +310,13 @@
   }
 
   .modal-overlay {
-    background-color: light-dark(rgb(16 24 32 / 0.45), rgb(0 0 0 / 0.6));
+    background-color: light-dark(rgb(8 52 59 / 0.45), rgb(0 0 0 / 0.6));
   }
 
   /* Scrollbars follow the scheme. */
   #dashboard-root,
   #dashboard-root .scrollable {
-    scrollbar-color: light-dark(#c4ccd5, #3a4754) transparent;
+    scrollbar-color: light-dark(#c7dcdf, #29545b) transparent;
   }
 
   /* Logo in the top bar: the white-text version on the dark bar. `content`
@@ -313,12 +324,12 @@
      than light-dark(). */
   @media (prefers-color-scheme: dark) {
     :root:not([data-aitra-theme="light"]) #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
-      content: url("/images/brand/logo-with-text-dark.png");
+      content: url("/images/brand/logo-with-text-dark.svg");
     }
   }
 
   :root[data-aitra-theme="dark"] #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
-    content: url("/images/brand/logo-with-text-dark.png");
+    content: url("/images/brand/logo-with-text-dark.svg");
   }
 }
 
@@ -327,6 +338,6 @@
    themes: always the white-text version.
    --------------------------------------------------------------------------- */
 #dashboard-sidebar img[src$="logo-with-text.svg"] {
-  content: url("/images/brand/logo-with-text-dark.png");
+  content: url("/images/brand/logo-with-text-dark.svg");
   filter: none;
 }

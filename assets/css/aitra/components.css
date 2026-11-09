@@ -82,7 +82,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     Buttons: one filled primary (blue), a white secondary with a hairline, a
+     Buttons: one filled primary (petróleo), a white secondary with a hairline, a
      red outline for destructive actions, solid red only inside a
      confirmation. Flat colours, 1px borders, a press that answers at once.
      ------------------------------------------------------------------------ */
@@ -92,7 +92,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.9375rem;
     line-height: 1.25rem;
-    font-weight: 560;
+    font-weight: 600;
     letter-spacing: 0;
     box-shadow: none;
     transition:
@@ -226,13 +226,13 @@
 
   .action-button--on-dark {
     background-color: #fff;
-    color: var(--aitra-ink);
+    color: var(--aitra-dark);
     box-shadow: none;
   }
 
   @media (hover: hover) {
     .action-button--on-dark:hover:not(:disabled, [aria-disabled="true"]) {
-      background-color: #e1e6eb;
+      background-color: #dce9eb;
     }
   }
 
@@ -289,7 +289,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     Forms: white fields with a visible hairline, a blue focus ring, labels in
+     Forms: white fields with a visible hairline, a petróleo focus ring, labels in
      sentence case above the field.
      ------------------------------------------------------------------------ */
   .input,
@@ -352,7 +352,7 @@
   .label {
     font-size: 0.875rem;
     line-height: 1.25rem;
-    font-weight: 560;
+    font-weight: 600;
     color: var(--color-tymeslot-700);
     text-transform: none;
     letter-spacing: 0;
@@ -397,10 +397,10 @@
   }
 
   .status-toggle-slider {
-    box-shadow: 0 1px 2px rgb(16 24 32 / 0.2), 0 1px 1px rgb(16 24 32 / 0.06);
+    box-shadow: 0 1px 2px rgb(8 52 59 / 0.2), 0 1px 1px rgb(8 52 59 / 0.06);
   }
 
-  /* Choice cards (mode selectors): selected is a tinted card with a blue
+  /* Choice cards (mode selectors): selected is a tinted card with a petróleo
      edge, not a solid gradient slab. Upstream marks the active state
      !important, so this has to as well. */
   .glass-selector {
@@ -409,7 +409,7 @@
     background-color: var(--aitra-surface);
     border-color: var(--aitra-hairline-strong);
     color: var(--color-tymeslot-700);
-    font-weight: 560;
+    font-weight: 600;
   }
 
   .glass-selector:hover {
@@ -482,7 +482,7 @@
 #dashboard-root [class*="shadow-green-"],
 #dashboard-root [class*="shadow-amber-"],
 #dashboard-root [class*="shadow-tymeslot-"] {
-  --tw-shadow-color: rgb(16 24 32 / 0.06);
+  --tw-shadow-color: rgb(8 52 59 / 0.06);
 }
 
 /* No zoom or nudge on hover: things that move under the pointer read as
@@ -518,7 +518,7 @@
 
 /* Pills / badges: medium weight, a hairline of their own colour. */
 #dashboard-root span.rounded-token-full.text-token-xs.tabular-nums {
-  font-weight: 560;
+  font-weight: 600;
   box-shadow: inset 0 0 0 1px color-mix(in oklab, currentColor 14%, transparent);
 }
 
@@ -560,7 +560,7 @@
 #dashboard-root th {
   padding: 0.625rem 0.875rem;
   font-size: 0.8125rem;
-  font-weight: 560;
+  font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
   color: var(--color-tymeslot-500);
@@ -618,12 +618,12 @@
   position: sticky;
   right: 0;
   z-index: 1;
-  box-shadow: -10px 0 10px -10px rgb(16 24 32 / 0.18);
+  box-shadow: -10px 0 10px -10px rgb(8 52 59 / 0.18);
 }
 
 /* ---------------------------------------------------------------------------
    Tab strips (TymeslotWeb…Navigation.tab_bar): the active tab is already a
-   flat blue after the token swap; the strip itself loses its 2px frame.
+   flat petróleo after the token swap; the strip itself loses its 2px frame.
    --------------------------------------------------------------------------- */
 #dashboard-root [phx-hook="ScrollStrip"] > div {
   transition: background-color var(--aitra-fast) ease, color var(--aitra-fast) ease;
@@ -631,20 +631,20 @@
 
 #dashboard-root [phx-hook="ScrollStrip"] [role="tab"],
 #dashboard-root [phx-hook="ScrollStrip"] a {
-  font-weight: 560;
+  font-weight: 600;
 }
 
 /* ===========================================================================
    Dialogs (modal.css is unlayered, so these are too)
    =========================================================================== */
 .modal-overlay {
-  background-color: rgb(16 24 32 / 0.45);
+  background-color: rgb(8 52 59 / 0.45);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
 
 .modal-overlay .modal-content {
-  border: 1px solid rgb(16 24 32 / 0.06);
+  border: 1px solid rgb(8 52 59 / 0.06);
   border-radius: 1.25rem;
   box-shadow: var(--aitra-elev-4);
   animation: aitra-dialog-in 200ms var(--aitra-ease-out);

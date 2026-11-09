@@ -6,19 +6,31 @@
 
    Layout of the frame:
      - a flush white top bar with a hairline, carrying the full-colour logo;
-     - the page on a light grey canvas, so white cards read as cards;
-     - the navigation as a calm ink (#101820) panel: on desktop an inset
-       island with rounded corners, below lg the existing off-canvas drawer.
+     - the page on névoa (#F1F7F7), so white cards read as cards;
+     - the navigation as a petróleo escuro (#08343B) panel: on desktop an
+       inset island with rounded corners, below lg the off-canvas drawer.
 
-   Why a dark sidebar: it is the brand manual's signature background, it
-   separates "where can I go" from "what am I doing" without a single extra
-   line, and it lets the selected row be a solid blue fill that is visible at a
-   glance. The content stays light for reading and forms.
+   Why a dark sidebar: petróleo escuro is the v2 identity's dense background
+   (the landing's clients band and footer), it separates "where can I go"
+   from "what am I doing" without a single extra line, and it lets the
+   selected row be a small menta fill, the one place menta carries text
+   (in petróleo escuro, never white). The content stays light.
 
    These rules are unlayered and ID-scoped on purpose: they replace utility
    classes written in the upstream templates (padding, borders, gradients),
    which a components-layer rule could not override.
    ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Brand lettering everywhere (auth, 404, site pages): the upstream templates
+   size the logo with h-10/h-12 for Tymeslot's narrower mark; the v2 "Aitra
+   Cal" lettering is about twice as wide, so cap it at 32px tall (≈152px
+   wide, A at the kit's preferred 32px). The top bar sets its own height.
+   --------------------------------------------------------------------------- */
+img[src*="/images/brand/logo-with-text"] {
+  max-height: 2rem;
+  width: auto;
+}
 
 /* ---------------------------------------------------------------------------
    Canvas
@@ -65,13 +77,16 @@
   height: 3.75rem;
 }
 
+/* The v2 "Aitra Cal" lettering has a tight viewBox (no protection area in
+   the file): 28px tall on phones, 32px from sm, i.e. the A at the kit's
+   recommended minimum of 24px and its preferred 32px. */
 #dashboard-root .brand-nav img {
-  height: 2.25rem;
+  height: 1.75rem;
 }
 
 @media (width >= 40rem) {
   #dashboard-root .brand-nav img {
-    height: 2.5rem;
+    height: 2rem;
   }
 }
 
@@ -120,7 +135,7 @@
 }
 
 #user-menu > button > span {
-  font-weight: 560;
+  font-weight: 600;
 }
 
 #user-menu-panel {
@@ -197,7 +212,7 @@
   }
 
   #dashboard-sidebar-overlay {
-    background-color: rgb(16 24 32 / 0.48);
+    background-color: rgb(8 52 59 / 0.48);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -206,7 +221,7 @@
 /* The drawer's own logo (mobile only); dark.css swaps in the white-text
    version, since the panel is dark in both themes. */
 #dashboard-sidebar img {
-  height: 2rem;
+  height: 1.75rem;
 }
 
 #dashboard-sidebar .dashboard-sidebar-close {
@@ -232,10 +247,10 @@
   padding: 0 0.75rem;
   margin: 0 0 0.25rem;
   font-size: 0.75rem;
-  font-weight: 560;
+  font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: none;
-  color: rgb(255 255 255 / 0.45);
+  color: rgb(255 255 255 / 0.55);
 }
 
 #dashboard-sidebar .dashboard-nav-section-title::after {
@@ -286,19 +301,20 @@
   scale: none;
 }
 
-/* Selected row: the one solid fill in the panel. */
+/* Selected row: the one solid fill in the panel, menta with petróleo
+   escuro text (6.25:1), as the landing's dark bands do. */
 #dashboard-sidebar .dashboard-nav-link--active,
 #dashboard-sidebar .dashboard-nav-link--active:hover {
-  color: #fff;
-  background: var(--aitra-accent);
+  color: var(--aitra-on-mint);
+  background: var(--aitra-mint);
   background-image: none;
-  font-weight: 560;
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.12);
+  font-weight: 600;
+  box-shadow: none;
 }
 
 #dashboard-sidebar .dashboard-nav-link--active svg {
   opacity: 1;
-  color: #fff;
+  color: var(--aitra-on-mint);
 }
 
 #dashboard-sidebar .dashboard-nav-link--active::before {
@@ -306,14 +322,14 @@
 }
 
 #dashboard-sidebar .dashboard-nav-link:focus-visible {
-  outline: 2px solid #93b7e2;
+  outline: 2px solid var(--aitra-mint);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-/* Setup reminder dot: brighter blue on ink. */
+/* Setup reminder dot: menta on petróleo escuro. */
 #dashboard-sidebar .dashboard-nav-notification .bg-turquoise-600 {
-  background-color: #93b7e2;
+  background-color: var(--aitra-mint);
 }
 
 @media (width < 64rem) {
@@ -326,14 +342,14 @@
   }
 }
 
-/* "View page": the panel's one button, white on ink. The copy button beside
-   it is a quiet square. Both stay out of the active-row blue so the selected
-   section is never ambiguous. */
+/* "View page": the panel's one button, white with petróleo escuro text.
+   The copy button beside it is a quiet square. Both stay out of the
+   active-row menta so the selected section is never ambiguous. */
 #dashboard-sidebar a.dashboard-nav-link[target="_blank"] {
   justify-content: center;
   background: #fff;
   background-image: none;
-  color: var(--aitra-ink);
+  color: var(--aitra-dark);
   font-weight: 600;
   box-shadow: none;
   padding-block: 0.5625rem;
@@ -341,13 +357,13 @@
 
 #dashboard-sidebar a.dashboard-nav-link[target="_blank"] svg,
 #dashboard-sidebar a.dashboard-nav-link[target="_blank"] span {
-  color: var(--aitra-ink);
+  color: var(--aitra-dark);
 }
 
 @media (hover: hover) {
   #dashboard-sidebar a.dashboard-nav-link[target="_blank"]:hover {
-    background: #e1e6eb;
-    color: var(--aitra-ink);
+    background: #dce9eb;
+    color: var(--aitra-dark);
   }
 }
 
@@ -424,18 +440,33 @@
 
 /* ---------------------------------------------------------------------------
    Signature panels: the overview welcome banner and the "up next" card
-   (both carry .dashboard-sheen). Ink instead of a three-colour gradient.
+   (both carry .dashboard-sheen). Flat petróleo escuro, no gradient: the v2
+   identity is a flat brand. The sheen element (absolute, the panel is its
+   positioning parent) becomes the kit's "canto aberto" graphic: two menta
+   bars in an L in the top-right corner (Aitra_Grafismo_Canto_Aberto.svg).
    --------------------------------------------------------------------------- */
 #dashboard-root :has(> .dashboard-sheen) {
   background-color: var(--aitra-panel);
-  background-image:
-    radial-gradient(120% 140% at 100% 0%, rgb(64 126 201 / 0.32), transparent 55%);
+  background-image: none;
   box-shadow: var(--aitra-elev-2);
   border-radius: 1rem;
 }
 
 #dashboard-root .dashboard-sheen {
-  display: none;
+  inset: 1.125rem 1.125rem auto auto;
+  width: 1.75rem;
+  height: 1.75rem;
+  background:
+    linear-gradient(var(--aitra-mint), var(--aitra-mint)) top left / 100% 24.3% no-repeat,
+    linear-gradient(var(--aitra-mint), var(--aitra-mint)) bottom right / 24.3% 75.7% no-repeat;
+  opacity: 1;
+  animation: none;
+}
+
+@media (width < 40rem) {
+  #dashboard-root .dashboard-sheen {
+    display: none;
+  }
 }
 
 /* The welcome line: a quieter weight on the dark panel. */

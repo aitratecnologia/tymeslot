@@ -5,8 +5,8 @@
    in this folder so upstream merges never conflict on it: no upstream
    template or stylesheet is edited. See aitra/README.md (Patches).
 
-     fonts.css       Jost (brand typeface), self-hosted under /fonts/aitra/
-     tokens.css      palette (ink, blue, green, red), neutrals, type, radii
+     fonts.css       Manrope (brand typeface), self-hosted under /fonts/aitra/
+     tokens.css      palette v2 (petróleo, petróleo escuro, menta), neutrals, type
      shell.css       top bar, sidebar, canvas, page header, signature panels
      components.css  cards, buttons, forms, tables, badges, dialogs, toasts
      dark.css        dark theme (follows the OS; toggle in assets/js/aitra)
