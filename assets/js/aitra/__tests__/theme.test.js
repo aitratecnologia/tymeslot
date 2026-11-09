@@ -51,19 +51,26 @@ describe('aitra theme switch', () => {
     buildTopBar();
   });
 
-  test('follows the system by default: no attribute, button before the user menu', async () => {
+  test('is dark by default: no attribute, button before the user menu', async () => {
     await load();
     expect(document.documentElement.dataset.aitraTheme).toBeUndefined();
     const button = document.getElementById('aitra-theme-toggle');
     expect(button).not.toBeNull();
     expect(button.nextElementSibling.dataset.tour).toBe('user-menu');
-    expect(button.getAttribute('aria-label')).toBe('Theme: follow system');
+    expect(button.getAttribute('aria-label')).toBe('Theme: dark');
   });
 
   test('applies a stored choice on load', async () => {
+    localStorage.setItem('aitra-theme', 'light');
+    await load();
+    expect(document.documentElement.dataset.aitraTheme).toBe('light');
+  });
+
+  test('a stored "dark" from before the default changed still means dark', async () => {
     localStorage.setItem('aitra-theme', 'dark');
     await load();
-    expect(document.documentElement.dataset.aitraTheme).toBe('dark');
+    expect(document.documentElement.dataset.aitraTheme).toBeUndefined();
+    expect(document.getElementById('aitra-theme-toggle').dataset.mode).toBe('dark');
   });
 
   test('ignores an unknown stored value', async () => {
@@ -72,7 +79,7 @@ describe('aitra theme switch', () => {
     expect(document.documentElement.dataset.aitraTheme).toBeUndefined();
   });
 
-  test('cycles system → light → dark → system and remembers it', async () => {
+  test('cycles dark → light → system → dark and remembers it', async () => {
     await load();
     const button = document.getElementById('aitra-theme-toggle');
 
@@ -81,8 +88,8 @@ describe('aitra theme switch', () => {
     expect(localStorage.getItem('aitra-theme')).toBe('light');
 
     button.click();
-    expect(document.documentElement.dataset.aitraTheme).toBe('dark');
-    expect(localStorage.getItem('aitra-theme')).toBe('dark');
+    expect(document.documentElement.dataset.aitraTheme).toBe('system');
+    expect(localStorage.getItem('aitra-theme')).toBe('system');
 
     button.click();
     expect(document.documentElement.dataset.aitraTheme).toBeUndefined();
@@ -93,7 +100,7 @@ describe('aitra theme switch', () => {
     document.documentElement.lang = 'pt-PT';
     await load();
     const button = document.getElementById('aitra-theme-toggle');
-    expect(button.getAttribute('aria-label')).toBe('Tema: seguir o sistema');
+    expect(button.getAttribute('aria-label')).toBe('Tema: escuro');
   });
 
   test('puts the button back when a re-render drops it', async () => {

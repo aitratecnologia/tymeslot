@@ -10,7 +10,7 @@
      shell.css       top bar, sidebar, canvas, page header, signature panels
      components.css  cards, buttons, forms, tables, badges, dialogs, toasts
      auth.css        sign-in/sign-up pages: névoa, kit graphics, solid card
-     dark.css        dark theme (follows the OS; toggle in assets/js/aitra)
+     dark.css        dark theme, the default (toggle in assets/js/aitra)
      motion.css      motion budget, reduced motion/transparency, contrast
 
    The booking pages (assets/css/scheduling) have their own stylesheets and

@@ -11,9 +11,12 @@
    browser picks a side from the inherited `color-scheme`, which is set on the
    root element only while the page contains #dashboard-root:
 
-     default                      color-scheme: light dark  → follows the OS
-     html[data-aitra-theme=dark]  color-scheme: dark        → forced dark
-     html[data-aitra-theme=light] color-scheme: light       → forced light
+     default (and =dark)            color-scheme: dark        → dark
+     html[data-aitra-theme=light]   color-scheme: light       → forced light
+     html[data-aitra-theme=system]  color-scheme: light dark  → follows the OS
+
+   Dark is the default (Kevin's choice, 2026-11-09). It is set here, in CSS,
+   so the first paint is already dark: no light flash before theme.js runs.
 
    The attribute is set by assets/js/aitra/theme.js (the toggle in the top
    bar, remembered in localStorage). Pages without #dashboard-root (the
@@ -35,11 +38,11 @@
 
 @supports (color: light-dark(#000, #fff)) {
   :root:has(#dashboard-root) {
-    color-scheme: light dark;
+    color-scheme: dark;
   }
 
-  :root[data-aitra-theme="dark"]:has(#dashboard-root) {
-    color-scheme: dark;
+  :root[data-aitra-theme="system"]:has(#dashboard-root) {
+    color-scheme: light dark;
   }
 
   :root[data-aitra-theme="light"]:has(#dashboard-root) {
@@ -322,14 +325,14 @@
   /* Logo in the top bar: the white-text version on the dark bar. `content`
      is not a colour, so this needs the explicit pair of conditions rather
      than light-dark(). */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-aitra-theme="light"]) #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
-      content: url("/images/brand/logo-with-text-dark.svg");
-    }
+  :root:not([data-aitra-theme="light"], [data-aitra-theme="system"]) #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
+    content: url("/images/brand/logo-with-text-dark.svg");
   }
 
-  :root[data-aitra-theme="dark"] #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
-    content: url("/images/brand/logo-with-text-dark.svg");
+  @media (prefers-color-scheme: dark) {
+    :root[data-aitra-theme="system"] #dashboard-root .brand-nav img[src$="logo-with-text.svg"] {
+      content: url("/images/brand/logo-with-text-dark.svg");
+    }
   }
 }
 

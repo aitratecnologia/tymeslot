@@ -1,22 +1,24 @@
 /**
- * Aitra Cal: dashboard theme switch (system / light / dark).
+ * Aitra Cal: dashboard theme switch (dark / light / system).
  *
- * The dark theme itself is pure CSS (assets/css/aitra/dark.css) and follows
- * the OS by default. This file only adds an explicit choice:
- *   - sets html[data-aitra-theme="light" | "dark"] (absent = follow the OS);
- *   - remembers it in localStorage;
+ * The dark theme itself is pure CSS (assets/css/aitra/dark.css) and is the
+ * default, set in CSS so the first paint is already dark. This file only
+ * adds an explicit choice:
+ *   - sets html[data-aitra-theme="light" | "system"] (absent = dark);
+ *   - remembers it in localStorage (nothing stored = dark);
  *   - injects a small button before the user menu in the dashboard top bar.
  *
  * No upstream template is edited, so the button is added from here. LiveView
  * re-renders the top bar from the server and drops nodes it does not know,
  * so a MutationObserver puts the button back when that happens. The choice is
- * applied when this module runs (after the HTML is parsed): with a forced
- * theme that differs from the OS there can be a brief flash on a full page
- * load, never on LiveView navigation.
+ * applied when this module runs (after the HTML is parsed): with light or
+ * system chosen there can be a brief dark flash on a full page load, never
+ * on LiveView navigation.
  */
 
 const KEY = "aitra-theme"
-const MODES = ["system", "light", "dark"]
+const MODES = ["dark", "light", "system"]
+const DEFAULT = "dark"
 const BUTTON_ID = "aitra-theme-toggle"
 const ANCHOR = '#dashboard-root [data-tour="user-menu"]'
 
@@ -42,15 +44,15 @@ function labels() {
 function stored() {
   try {
     const value = window.localStorage.getItem(KEY)
-    return MODES.includes(value) ? value : "system"
+    return MODES.includes(value) ? value : DEFAULT
   } catch (_error) {
-    return "system"
+    return DEFAULT
   }
 }
 
 function save(mode) {
   try {
-    if (mode === "system") window.localStorage.removeItem(KEY)
+    if (mode === DEFAULT) window.localStorage.removeItem(KEY)
     else window.localStorage.setItem(KEY, mode)
   } catch (_error) {
     // Private mode or storage disabled: the choice lasts for this page only.
@@ -59,7 +61,7 @@ function save(mode) {
 
 function apply(mode) {
   const root = document.documentElement
-  if (mode === "system") delete root.dataset.aitraTheme
+  if (mode === DEFAULT) delete root.dataset.aitraTheme
   else root.dataset.aitraTheme = mode
 }
 
