@@ -1,0 +1,80 @@
+# Aitra: Semgrep SAST scan (patch "Semgrep", see aitra/README.md).
+#
+# Complements what upstream already runs in verify.yml (sobelow for Phoenix,
+# credo, mix_audit) and gitleaks.yml: Semgrep adds rules for the Elixir code,
+# the browser JavaScript, the Dockerfiles, these workflows and leaked secrets.
+#
+# Every finding goes to the repository's Security → Code scanning tab (free
+# for public repositories). The job fails only on ERROR-severity findings, so
+# the existing warnings (all triaged as false positives on 2026-11-09) do not
+# block pushes, while a new high-severity issue does.
+name: Semgrep
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, so new rules in the registry are applied to unchanged code too.
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: semgrep-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    if: github.server_url == 'https://github.com' && github.actor != 'dependabot[bot]'
+    permissions:
+      contents: read
+      security-events: write
+    timeout-minutes: 20
+    container:
+      # semgrep/semgrep:1.182.0, pinned by digest.
+      image: semgrep/semgrep@sha256:4a34048c04fef049f71665047f074cffb00cc3d89482f965a5cd151d589237af
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          persist-credentials: false
+
+      - name: Scan
+        run: |
+          semgrep scan \
+            --config p/default \
+            --config p/elixir \
+            --config p/javascript \
+            --config p/dockerfile \
+            --config p/github-actions \
+            --config p/secrets \
+            --metrics=off \
+            --sarif-output=semgrep.sarif \
+            --json-output=semgrep.json
+
+      - name: Upload to code scanning
+        # Fork PRs get a read-only token, so they skip the upload; the gate
+        # below still runs for them.
+        if: >-
+          always() && hashFiles('semgrep.sarif') != '' &&
+          (github.event_name != 'pull_request' ||
+           github.event.pull_request.head.repo.full_name == github.repository)
+        uses: github/codeql-action/upload-sarif@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4.39.0
+        with:
+          sarif_file: semgrep.sarif
+          category: semgrep
+
+      - name: Fail on ERROR-severity findings
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          results = json.load(open("semgrep.json"))["results"]
+          errors = [r for r in results if r["extra"]["severity"] == "ERROR"]
+          for r in errors:
+              print(f'::error file={r["path"]},line={r["start"]["line"]}::{r["check_id"]}: {r["extra"]["message"][:300]}')
+          print(f"{len(results)} findings, {len(errors)} at ERROR severity")
+          sys.exit(1 if errors else 0)
+          EOF

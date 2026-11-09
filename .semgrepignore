@@ -1,0 +1,22 @@
+# Aitra: paths Semgrep skips (patch "Semgrep", see aitra/README.md).
+# Third-party and generated code, and test fixtures that use eval/innerHTML
+# on purpose. Writing this file replaces Semgrep's built-in defaults, so the
+# usual ones are repeated here.
+:include .gitignore
+
+deps/
+_build/
+node_modules/
+assets/vendor/
+priv/static/
+priv/gettext/
+cover/
+
+test/
+assets/js/__tests__/
+assets/**/*.test.js
+
+*.min.js
+*.svg
+*.po
+*.pot
