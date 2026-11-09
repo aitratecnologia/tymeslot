@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Aitra: sign-in, sign-up and password pages
+
+   Markup: TymeslotWeb.Shared.Auth.LayoutComponents.auth_card_layout (a
+   .video-background-container with a watercolour video, the motion toggle
+   and the .auth-glass-card).
+
+   The v2 identity is a flat, light brand: the landing puts petróleo on white
+   and névoa, with the kit's support graphics as the only ornament. So the
+   video and its tint go, the page becomes névoa with the "canto aberto" in
+   menta (top right) and the "barra" (petróleo with a menta tip) along the
+   bottom, and the frosted card becomes a solid white card with a hairline.
+   Scoped with :has(.auth-glass-card), so the booking themes that reuse
+   .video-background-container are untouched.
+   ========================================================================== */
+
+main:has(.auth-glass-card) {
+  background-color: #f1f7f7;
+}
+
+main:has(.auth-glass-card) > .video-background-container {
+  background: none;
+}
+
+/* Hidden muted autoplay videos are paused by the browser, and with
+   preload="metadata" only a few kilobytes are fetched. */
+main:has(.auth-glass-card) > .video-background-container > *,
+main:has(.auth-glass-card) > .background-motion-toggle {
+  display: none;
+}
+
+/* "Canto aberto": two menta bars in an L (Aitra_Grafismo_Canto_Aberto.svg,
+   74×74 with 18-unit bars). */
+main:has(.auth-glass-card)::before {
+  content: "";
+  position: absolute;
+  top: clamp(1.25rem, 4vw, 3rem);
+  right: clamp(1.25rem, 4vw, 3rem);
+  width: clamp(2.5rem, 6vw, 4.625rem);
+  aspect-ratio: 1;
+  background:
+    linear-gradient(#37c5b0, #37c5b0) top left / 100% 24.3% no-repeat,
+    linear-gradient(#37c5b0, #37c5b0) bottom right / 24.3% 75.7% no-repeat;
+  pointer-events: none;
+}
+
+/* "Barra": petróleo with a menta tip (760/160 of the original 920×20). */
+main:has(.auth-glass-card)::after {
+  content: "";
+  position: absolute;
+  left: clamp(1.25rem, 4vw, 3rem);
+  right: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(1.25rem, 4vw, 3rem);
+  height: 0.375rem;
+  background: linear-gradient(to right, #075b67 0 82.6%, #37c5b0 82.6% 100%);
+  pointer-events: none;
+}
+
+main:has(.auth-glass-card) .auth-glass-card {
+  background-color: #ffffff;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid var(--aitra-hairline);
+  border-radius: 1rem;
+  box-shadow: var(--aitra-elev-3);
+}
+
+/* The headline in the brand's bold (Tymeslot sets it in black). */
+main:has(.auth-glass-card) .auth-glass-card h1 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--aitra-ink);
+}
+
+/* The logo is a wordmark, not a button: no grow on hover. */
+main:has(.auth-glass-card) .auth-glass-card .hover\:scale-105:hover {
+  scale: none;
+  transform: none;
+}
